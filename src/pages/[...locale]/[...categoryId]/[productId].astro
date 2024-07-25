@@ -1,0 +1,30 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+import { isDefaultLocale } from '~/utils/i18n'
+
+export const getStaticPaths = (async () => {
+  const products = await getCollection('products')
+
+  return products.map((product) => {
+    const slug = product.id.split('/')
+    const lang = slug.slice(0, 1)[0]
+
+    return {
+      params: {
+        locale: isDefaultLocale(lang) ? undefined : lang,
+        categoryId: slug.slice(1, -1).join('/'),
+        productId: slug.slice(-1, slug.length)[0],
+      },
+      props: {
+        product,
+      },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const { product } = Astro.props
+
+---
+
+{JSON.stringify(product)}

@@ -1,0 +1,15 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { isDefaultLocale, locales } from '~/utils/i18n'
+
+export const getStaticPaths = (() => {
+  return locales.map(locale => ({
+    params: {
+      locale: isDefaultLocale(locale) ? undefined : locale,
+    },
+  }))
+}) satisfies GetStaticPaths
+
+---
+
+{Astro.currentLocale} test

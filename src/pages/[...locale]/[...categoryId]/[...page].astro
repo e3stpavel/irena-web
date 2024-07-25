@@ -1,0 +1,42 @@
+---
+import type { GetStaticPaths } from 'astro'
+import type { CollectionEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
+import { isDefaultLocale } from '~/utils/i18n'
+
+export const getStaticPaths = (async ({ paginate }) => {
+  const products = await getCollection('products')
+  const productsByCategory = products.reduce((acc, product) => {
+    const categoryIds = product.id.split('/').slice(0, -1)
+
+    categoryIds.forEach((categoryId, i) => {
+      // skip locale
+      if (i === 0) {
+        return
+      }
+
+      const key = [...categoryIds.slice(0, i), categoryId].join('/');
+
+      (acc[key] = acc[key] || []).push(product)
+    })
+
+    return acc
+  }, {} as Record<string, CollectionEntry<'products'>[]>)
+
+  return Object.entries(productsByCategory).flatMap(([category, products]) => {
+    const [locale, ...categories] = category.split('/')
+
+    return paginate(products, {
+      params: {
+        locale: isDefaultLocale(locale) ? undefined : locale,
+        categoryId: categories.join('/'),
+      },
+    })
+  })
+}) satisfies GetStaticPaths
+
+const { page } = Astro.props
+
+---
+
+{JSON.stringify(page)}

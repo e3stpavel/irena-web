@@ -1,0 +1,7 @@
+price: 15
+unit: kg
+
+thumbnail: ~/assets/products/pretzels/sweet/with-cream-and-raisins/thumbnail.jpg
+images:
+  - ~/assets/product-01.jpg
+  - ~/assets/product-02.jpg
