@@ -1,0 +1,17 @@
+---
+import BaseLayout from './BaseLayout.astro'
+import { Footer, NavBar } from '~/components/navigation'
+---
+
+<BaseLayout>
+  <slot name="head" slot="head" />
+
+  <Fragment slot="header">
+    <slot name="announcements" />
+    <NavBar />
+  </Fragment>
+
+  <slot />
+
+  <Footer slot="footer" />
+</BaseLayout>

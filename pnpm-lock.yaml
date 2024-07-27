@@ -42,6 +42,9 @@ importers:
       '@unocss/reset':
         specifier: ^0.61.5
         version: 0.61.5
+      astro-nanointl:
+        specifier: ^1.0.0
+        version: 1.0.0(astro@4.12.2(typescript@5.5.4))
       eslint:
         specifier: ^9.7.0
         version: 9.7.0
@@ -1403,6 +1406,11 @@ packages:
   astro-eslint-parser@1.0.2:
     resolution: {integrity: sha512-8hJaCuqxObShWl2wEsnASqh/DbQ2O+S66m0Q3ctJlzBPEQ4pfGwwama3FCjZO3GDLQsjvn1T0v93Vxyu/+5fGw==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
+
+  astro-nanointl@1.0.0:
+    resolution: {integrity: sha512-rTd/9HCB0ddZqRG4a/+0zTgdigok7Dra4G62pnjhNOqzyIJWg5/+xhX786QZX3ExT2iwJPSBSSZfV4ZZv3jswQ==}
+    peerDependencies:
+      astro: ^4.0.0
 
   astro@4.12.2:
     resolution: {integrity: sha512-l6OmqlL+FiuSi9x6F+EGZitteOznq1JffOil7st7cdqeMCTEIym4oagI1a6zp6QekliKWEEZWdplGhgh1k1f7Q==}
@@ -5397,6 +5405,10 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
       - typescript
+
+  astro-nanointl@1.0.0(astro@4.12.2(typescript@5.5.4)):
+    dependencies:
+      astro: 4.12.2(typescript@5.5.4)
 
   astro@4.12.2(typescript@5.5.4):
     dependencies:

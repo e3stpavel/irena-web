@@ -1,0 +1,17 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+type Props<Tag extends HTMLTag = HTMLTag> = Polymorphic<{
+  as: Tag
+  label: string
+  icon: any
+}>
+
+const { as: Tag = 'button', label, icon: Icon, ...attrs } = Astro.props
+
+---
+
+<Tag class="border border-transparent rounded-md p-2 text-zinc-500 -m-2 hover:text-zinc-600" {...attrs}>
+  <span class="sr-only">{ label }</span>
+  <Icon class="text-xl" aria-hidden="true" />
+</Tag>

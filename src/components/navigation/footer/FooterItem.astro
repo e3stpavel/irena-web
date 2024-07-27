@@ -1,0 +1,11 @@
+---
+import type { ComponentProps, HTMLTag, Polymorphic } from 'astro/types'
+import NavItem from '../NavItem.astro'
+
+type Props<Tag extends HTMLTag = HTMLTag> = Polymorphic<{
+  as: Tag
+} & ComponentProps<typeof NavItem>>
+
+---
+
+<NavItem {...Astro.props} class="text-zinc-700 md:text-sm hover:text-zinc-900"><slot /></NavItem>

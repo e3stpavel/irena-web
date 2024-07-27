@@ -1,4 +1,5 @@
 import { defineCollection, reference, z } from 'astro:content'
+import { translationsSchema } from 'astro-nanointl'
 
 const products = defineCollection({
   type: 'data',
@@ -19,7 +20,13 @@ const productDetails = defineCollection({
   }),
 })
 
+const translations = defineCollection({
+  type: 'data',
+  schema: translationsSchema,
+})
+
 export const collections = {
   products,
   'product-details': productDetails,
+  translations,
 }

@@ -24,6 +24,7 @@
     "@iconify-json/material-symbols": "^1.1.85",
     "@unocss/eslint-plugin": "^0.61.5",
     "@unocss/reset": "^0.61.5",
+    "astro-nanointl": "^1.0.0",
     "eslint": "^9.7.0",
     "eslint-plugin-astro": "^1.2.3",
     "eslint-plugin-format": "^0.1.2",

@@ -1,5 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro'
+import HomeLayout from '~/layouts/HomeLayout.astro'
 import { isDefaultLocale, locales } from '~/utils/i18n'
 
 export const getStaticPaths = (() => {
@@ -12,4 +13,6 @@ export const getStaticPaths = (() => {
 
 ---
 
-{Astro.currentLocale} test
+<HomeLayout>
+  {Astro.currentLocale} test
+</HomeLayout>

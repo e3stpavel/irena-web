@@ -1,0 +1,117 @@
+---
+import { Image } from 'astro:assets'
+import { getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+import FooterItem from './FooterItem.astro'
+import IconButton from '~/components/common/IconButton.astro'
+
+import { getNavigationTranslations } from '~/data/get-navigation-translations'
+import { getTranslatedCategories } from '~/data/get-categories'
+
+import IrenaLogo from '~/assets/brand/wordmark.svg'
+import IconFacebook from '~icons/bxl/facebook-circle'
+import IconMessenger from '~icons/bxl/messenger'
+import IconWhatsapp from '~icons/bxl/whatsapp'
+import IconTelegram from '~icons/bxl/telegram'
+// import IconGithub from '~icons/bxl/github'
+
+
+const locale = Astro.currentLocale!
+
+const translations = await getEntry('translations', `${locale}/components/navigation/footer`)
+const t = {
+  ...useTranslations({
+    description: 'Irena is a mini-patisserie that produces natural homemade confectionery that will make your day a little sweeter.',
+
+    issue: 'Found an issue or a bug?',
+    issueAction: 'Report here',
+
+    privacy: 'We do not track you or use your cookies.',
+    copyright: 'All rights reserved.',
+  }, {
+    locale,
+    data: translations?.data,
+  }),
+  ...(await getNavigationTranslations(locale)),
+}
+
+const categories = await getTranslatedCategories(locale)
+
+---
+
+<div class="border-t bg-zinc-100">
+  <div class="mx-auto max-w-screen-xl px-4 pb-8 pt-16 lg:(px-8 pt-32) sm:(px-6 pt-24)">
+    <div class="grid gap-x-8 gap-y-16 lg:cols-2">
+      <div class="space-y-8">
+        <Image src={IrenaLogo} height={28} alt="Irena" />
+        <p class="max-w-sm text-zinc-700 leading-7 md:(text-sm leading-6)">{ t.description }</p>
+        <div class="flex gap-6">
+          <IconButton
+            as="a"
+            href="/"
+            label="Facebook"
+            icon={IconFacebook}
+          />
+          <IconButton
+            as="a"
+            href="/"
+            label="Messenger"
+            icon={IconMessenger}
+          />
+          <IconButton
+            as="a"
+            href="/"
+            label="Whatsapp"
+            icon={IconWhatsapp}
+          />
+          <IconButton
+            as="a"
+            href="/"
+            label="Telegram"
+            icon={IconTelegram}
+          />
+          {/* <IconButton
+            as="a"
+            href="/"
+            label="Github"
+            icon={IconGithub}
+          /> */}
+        </div>
+      </div>
+      <div class="grid gap-8 md:cols-3 sm:cols-2">
+        <div>
+          <h3 class="text-zinc-900 font-semibold md:(text-sm leading-6)">{ t.products }</h3>
+          <ul role="list" class="mt-6 space-y-4">
+            {categories.map(({ label, slug }) => (
+              <li>
+                <FooterItem as="a" href={slug}>{ label }</FooterItem>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h3 class="text-zinc-900 font-semibold md:(text-sm leading-6)">{ t.aboutUs }</h3>
+          <ul role="list" class="mt-6 space-y-4">
+            <li>
+              <FooterItem as="a" href="/">{ t.contacts }</FooterItem>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="mt-16 border-t pt-8 lg:mt-24 sm:mt-20">
+      <div class="text-sm text-zinc-500 leading-6 md:(flex flex-row-reverse justify-between text-xs leading-5)">
+        <div>
+          <p class="md:text-end">
+            { t.issue }
+            <a href="/" class="text-zinc-700 underline underline-offset-3 hover:(text-zinc-900 no-underline)">{ t.issueAction }</a>
+          </p>
+        </div>
+        <div>
+          <p>{ t.privacy }</p>
+          <p>&copy; 2024 Irena. { t.copyright }</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
