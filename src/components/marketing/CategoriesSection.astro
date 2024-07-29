@@ -1,0 +1,43 @@
+---
+import { getCollection, getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+import { shuffle } from '~/utils/shuffle'
+
+import Container from '~/components/common/Container.html'
+import Section from '~/components/common/Section.html'
+import CategoryPreview from '~/components/product/category-preview/CategoryPreview.astro'
+import Wrapper from '~/components/common/Wrapper.astro'
+
+
+const locale = Astro.currentLocale!
+
+const categories = shuffle(
+  await getCollection('categories', ({ id, data }) =>
+    id.startsWith(`${locale}/`) && data.subcategoryOf === undefined),
+).slice(0, 5)
+
+const translations = await getEntry('translations', `${locale}/components/marketing/categories`)
+const t = useTranslations({
+  heading: 'Discover products among popular categories',
+  paragraph: 'Find something delicious in the categories that others browse most',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<Container>
+  <Section>
+    <Wrapper
+      title={t.heading}
+      description={t.paragraph}
+      variant="default"
+    />
+    <div class="mt-4 sm:mt-8">
+      {categories.map(category => (
+        <CategoryPreview categoryId={category.id} />
+      ))}
+    </div>
+  </Section>
+</Container>

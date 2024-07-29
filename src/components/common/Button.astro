@@ -1,0 +1,54 @@
+---
+import type { HTMLTag, Polymorphic } from 'astro/types'
+
+const styles = {
+  container: {
+    variants: {
+      primary: 'border-indigo-800/40 bg-indigo-700 text-white hover:bg-indigo-600 active:bg-indigo-800',
+      onSurface: 'border-white/40 bg-white text-indigo-600 hover:bg-indigo-50 active:bg-indigo-100 focus-visible:outline-white',
+    },
+    sizes: {
+      sm: 'h-9 px-4',
+      md: 'h-10 px-5',
+      lg: 'h-12 px-6 ',
+    },
+  },
+  icon: {
+    variants: {
+      primary: 'text-indigo-50',
+      onSurface: 'text-indigo-500',
+    },
+  },
+}
+
+type Variant = keyof typeof styles['container']['variants']
+type Size = keyof typeof styles['container']['sizes']
+
+type Props<Tag extends HTMLTag = HTMLTag> = Polymorphic<{
+  as: Tag
+  label: string
+  variant: Variant
+  size: Size
+  icon?: {
+    component: any
+    position?: 'leading' | 'trailing'
+  }
+}>
+
+const { as: Tag = 'button', label, icon, variant, size, ...attrs } = Astro.props
+const { component: Icon, position = 'trailing' } = icon ?? {}
+
+---
+
+<Tag
+  class:list={[
+    'min-w-max inline-flex items-center justify-center gap-2 border rounded-full font-semibold focus-visible:(ring ring-current ring-inset)',
+    styles.container.variants[variant],
+    styles.container.sizes[size],
+    { 'flex-row-reverse': position === 'leading' },
+  ]}
+  {...attrs}
+>
+  { label }
+  { Icon && <Icon class:list={[styles.icon.variants[variant], '-mx-1']} aria-hidden="true" /> }
+</Tag>

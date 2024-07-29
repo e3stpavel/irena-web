@@ -1,0 +1,88 @@
+---
+import { useTranslations } from 'astro-nanointl'
+import { getEntry } from 'astro:content'
+
+import { args } from 'astro-nanointl/transformers'
+import Container from '~/components/common/Container.html'
+
+import IconSearch from '~icons/material-symbols/category-search-rounded'
+import IconContact from '~icons/material-symbols/mark-chat-unread-rounded'
+import IconOrder from '~icons/material-symbols/order-approve-rounded'
+
+const locale = Astro.currentLocale!
+
+const translations = await getEntry('translations', `${locale}/components/marketing/order`)
+const t = useTranslations({
+  heading: 'How to order from us?',
+
+  searchTitle: 'Select the product(s) you liked the most',
+  searchDescription: 'Find what you would like to try from our products',
+
+  contactTitle: 'Get in touch',
+  contactDescription: args('Write or call us %1 to order a particular product'),
+  contactCta: 'using our contacts',
+
+  orderTitle: 'Place an order',
+  orderDescription: 'Discuss all the nuances of your order, from weight to decorations and toppings',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<div class="bg-zinc-100">
+  <Container>
+    <div class="py-20 sm:py-24">
+      <div class="mx-auto max-w-2xl lg:mx-0">
+        <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">{ t.heading }</h2>
+      </div>
+      <div class="mx-auto mt-12 max-w-2xl lg:(mt-24 max-w-none) sm:mt-16">
+        <dl class="grid max-w-md gap-y-16 lg:cols-3 sm:(cols-2 max-w-none gap-x-12)">
+          <div class="flex flex-col">
+            <dt class="font-semibold leading-7">
+              <div class="mb-6 size-16 flex items-center justify-center rounded-full bg-rose-200 text-2xl text-rose-600">
+                <IconSearch aria-hidden="true" />
+              </div>
+              { t.searchTitle }
+            </dt>
+            <dd class="mt-1 text-zinc-700 leading-7">
+              { t.searchDescription }
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="font-semibold leading-7">
+              <div class="mb-6 size-16 flex items-center justify-center rounded-full bg-green-200 text-2xl text-green-600">
+                <IconContact aria-hidden="true" />
+              </div>
+              { t.contactTitle }
+            </dt>
+            <dd class="mt-1 text-zinc-700 leading-7">
+              {() => {
+                const slices = t.contactDescription('/').split('/')
+                return (
+                  <>
+                    { slices[0] }
+                    <a href="/" class="text-zinc-900 underline underline-offset-2 hover:no-underline">{ t.contactCta }</a>
+                    { slices[1] }
+                  </>
+                )
+              }}
+            </dd>
+          </div>
+          <div class="flex flex-col">
+            <dt class="font-semibold leading-7">
+              <div class="mb-6 size-16 flex items-center justify-center rounded-full bg-indigo-200 text-2xl text-indigo-600">
+                <IconOrder aria-hidden="true" />
+              </div>
+              { t.orderTitle }
+            </dt>
+            <dd class="mt-1 text-zinc-700 leading-7">
+              { t.orderDescription }
+            </dd>
+          </div>
+        </dl>
+      </div>
+    </div>
+  </Container>
+</div>

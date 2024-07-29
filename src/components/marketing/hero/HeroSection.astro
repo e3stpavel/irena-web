@@ -1,0 +1,22 @@
+---
+import Heading from './Heading.astro'
+import Images from './Images.astro'
+import Container from '~/components/common/Container.html'
+---
+
+<div class="isolate overflow-hidden">
+  <Container>
+    <div class="py-16 lg:py-32 sm:py-24">
+      <div class="flex flex-col gap-16 lg:(flex-row gap-32) sm:gap-24">
+        <Heading />
+        <Images />
+      </div>
+    </div>
+  </Container>
+</div>
+<!--  <div class="mx-auto max-w-screen-xl px-4 py-16 lg:(px-8 py-16) sm:(px-6 py-24)">
+  <div class="grid items-center gap-16 lg:(cols-2 px-24) md:px-16">
+    <Heading />
+    <Images />
+  </div>
+</div> -->

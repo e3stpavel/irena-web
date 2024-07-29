@@ -1,7 +1,10 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import HomeLayout from '~/layouts/HomeLayout.astro'
 import { isDefaultLocale, locales } from '~/utils/i18n'
+
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { CategoriesSection, CtaSection, HeroSection } from '~/components/marketing'
+
 
 export const getStaticPaths = (() => {
   return locales.map(locale => ({
@@ -14,5 +17,7 @@ export const getStaticPaths = (() => {
 ---
 
 <HomeLayout>
-  {Astro.currentLocale} test
+  <HeroSection />
+  <CategoriesSection />
+  <CtaSection />
 </HomeLayout>

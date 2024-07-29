@@ -6,7 +6,7 @@ import FooterItem from './FooterItem.astro'
 import IconButton from '~/components/common/IconButton.astro'
 
 import { getNavigationTranslations } from '~/data/get-navigation-translations'
-import { getTranslatedCategories } from '~/data/get-categories'
+import { getCategoryLinks } from '~/data/get-category-links'
 
 import IrenaLogo from '~/assets/brand/wordmark.svg'
 import IconFacebook from '~icons/bxl/facebook-circle'
@@ -35,7 +35,7 @@ const t = {
   ...(await getNavigationTranslations(locale)),
 }
 
-const categories = await getTranslatedCategories(locale)
+const categoryLinks = await getCategoryLinks(locale)
 
 ---
 
@@ -82,7 +82,7 @@ const categories = await getTranslatedCategories(locale)
         <div>
           <h3 class="text-zinc-900 font-semibold md:(text-sm leading-6)">{ t.products }</h3>
           <ul role="list" class="mt-6 space-y-4">
-            {categories.map(({ label, slug }) => (
+            {categoryLinks.map(({ label, slug }) => (
               <li>
                 <FooterItem as="a" href={slug}>{ label }</FooterItem>
               </li>

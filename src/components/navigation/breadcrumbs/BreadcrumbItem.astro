@@ -1,0 +1,35 @@
+---
+import type { CollectionEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import IconArrowRight from '~icons/material-symbols/chevron-right-rounded'
+
+interface Props {
+  category: CollectionEntry<'categories'>
+  currentCategoryId: CollectionEntry<'categories'>['id']
+}
+
+const locale = Astro.currentLocale!
+
+const { category, currentCategoryId } = Astro.props
+const isCurrentCategory = category.id === currentCategoryId
+
+---
+
+{category.data.subcategoryOf && (
+  <Astro.self
+    category={await getEntry(category.data.subcategoryOf)}
+    currentCategoryId={currentCategoryId}
+  />
+)}
+<li>
+  <a
+    href={getRelativeLocaleUrl(locale, category.id.slice(2))}
+    hreflang={locale}
+    class="block text-zinc-700 hover:text-zinc-900"
+    aria-current={isCurrentCategory ? 'page' : 'false'}
+  >
+    { category.data.name }
+  </a>
+</li>
+{ !isCurrentCategory && <li role="presentation" aria-hidden="true" class="text-zinc-500"><IconArrowRight /></li> }

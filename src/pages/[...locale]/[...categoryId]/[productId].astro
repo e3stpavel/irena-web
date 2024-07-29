@@ -1,7 +1,15 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { getCollection } from 'astro:content'
+import { getCollection, getEntry } from 'astro:content'
+import { Image } from 'astro:assets'
+import { format, useTranslations } from 'astro-nanointl'
 import { isDefaultLocale } from '~/utils/i18n'
+
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import Container from '~/components/common/Container.html'
+import { OrderSection } from '~/components/marketing'
+import { Breadcrumbs } from '~/components/navigation'
+
 
 export const getStaticPaths = (async () => {
   const products = await getCollection('products')
@@ -23,8 +31,76 @@ export const getStaticPaths = (async () => {
   })
 }) satisfies GetStaticPaths
 
+const locale = Astro.currentLocale!
 const { product } = Astro.props
+
+const category = await getEntry('categories', product.id.split('/').slice(0, -1).join('/'))
+const details = await getEntry(product.data.details)
+
+if (category === undefined) {
+  throw new Error('Category was not found')
+}
+
+const translations = await getEntry('translations', `${locale}/components/product/card`)
+const t = useTranslations({
+  kg: 'kg',
+  pc: 'pc',
+}, {
+  locale,
+  data: translations?.data,
+})
 
 ---
 
-{JSON.stringify(product)}
+<HomeLayout>
+  <Container>
+    <div class="py-16 sm:py-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <Breadcrumbs category={category} />
+        <div class="mt-4 flex flex-col items-start gap-12 lg:flex-row">
+          <div class="lg:w-xl">
+            <div class="aspect-square overflow-hidden rounded-xl bg-zinc-200">
+              <Image src={details.data.thumbnail} alt={product.data.name} class="object-fit size-full object-cover" />
+            </div>
+          </div>
+          <div class="flex-1">
+            <div class="lg:w-md">
+              <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ product.data.name }</h1>
+              <div class="mt-4">
+                <h2 class="sr-only">Product information</h2>
+                <p class="text-3xl text-indigo-600 font-semibold tracking-tighter">
+                  {format(locale).number(details.data.price, {
+                    currency: 'EUR',
+                    style: 'currency',
+                  })}
+                  <span class="text-base text-zinc-700 font-medium tracking-normal">/{ t[details.data.unit] }</span>
+                </p>
+              </div>
+            </div>
+            <div class="mt-8 border-t pt-8">
+              <div class="lg:w-md">
+                <div class="prose prose-zinc">
+                  <div>
+                    <h3 class="not-prose text-zinc-900 font-semibold">Состав:</h3>
+                    <ul class="my-2">
+                      {product.data.composition.map(composable => (
+                        <li>{ composable }</li>
+                      ))}
+                    </ul>
+                  </div>
+                  {product.data.notes && (
+                    <div class="mt-8">
+                      <h3 class="not-prose text-zinc-900 font-semibold">Примечания:</h3>
+                      <p class="my-2">{ product.data.notes }</p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Container>
+  <OrderSection />
+</HomeLayout>

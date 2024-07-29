@@ -1,0 +1,30 @@
+---
+const styles = {
+  default: 'text-zinc-700',
+  onSurface: 'text-indigo-100',
+}
+
+interface Props {
+  title: string
+  description: string
+  variant: keyof typeof styles
+}
+
+const { title, description, variant } = Astro.props
+
+---
+
+<div
+  class:list={[
+    'mx-auto max-w-2xl text-center',
+    { 'text-white': variant === 'onSurface' },
+  ]}
+>
+  <h2 class="text-3xl font-bold tracking-tight sm:text-4xl">
+    { title }
+  </h2>
+  <p class:list={['mt-6 text-lg leading-8', styles[variant]]}>{ description }</p>
+  <div class="mt-10">
+    <slot />
+  </div>
+</div>

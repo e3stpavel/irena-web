@@ -1,0 +1,50 @@
+---
+import { Image } from 'astro:assets'
+import type { CollectionEntry } from 'astro:content'
+import { getEntry } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { format, useTranslations } from 'astro-nanointl'
+
+interface Props {
+  product: CollectionEntry<'products'>
+}
+
+const locale = Astro.currentLocale!
+const { product } = Astro.props
+
+const details = await getEntry(product.data.details)
+
+const translations = await getEntry('translations', `${locale}/components/product/card`)
+const t = useTranslations({
+  kg: 'kg',
+  pc: 'pc',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<div class="group relative snap-center">
+  <div class="aspect-square overflow-hidden rounded-lg bg-zinc-200 group-hover:opacity-75">
+    <Image src={details.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" />
+  </div>
+  <div class="mt-4">
+    <h3 class="truncate px-1 text-zinc-900 -mx-1">
+      <a
+        href={getRelativeLocaleUrl(locale, product.id.slice(2))}
+        hreflang={locale}
+      >
+        { product.data.name }
+        <span aria-hidden="true" class="absolute inset-0" />
+      </a>
+    </h3>
+    <p class="mt-1 text-xl text-indigo-600 font-medium">
+      {format(locale).number(details.data.price, {
+        currency: 'EUR',
+        style: 'currency',
+      })}
+      <span class="text-sm text-zinc-700 font-normal">/{ t[details.data.unit] }</span>
+    </p>
+  </div>
+</div>

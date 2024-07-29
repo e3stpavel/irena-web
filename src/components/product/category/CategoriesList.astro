@@ -1,0 +1,26 @@
+---
+import { type CollectionEntry, getCollection } from 'astro:content'
+import CategoryItem from './CategoryItem.astro'
+
+interface Props {
+  currentCategory: CollectionEntry<'categories'>
+}
+
+const locale = Astro.currentLocale!
+const { currentCategory } = Astro.props
+
+const categories = await getCollection('categories', ({ id, data }) =>
+  id.startsWith(`${locale}/`) && data.subcategoryOf === undefined)
+
+---
+
+<ul role="list" class="font-medium space-y-4">
+  {categories.map(category => (
+    <li>
+      <CategoryItem
+        category={category}
+        currentCategoryId={currentCategory.id}
+      />
+    </li>
+  ))}
+</ul>

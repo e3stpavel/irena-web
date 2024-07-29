@@ -1,42 +1,125 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import type { CollectionEntry } from 'astro:content'
-import { getCollection } from 'astro:content'
+import { type CollectionEntry, getCollection, getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+import { params } from 'astro-nanointl/transformers'
 import { isDefaultLocale } from '~/utils/i18n'
 
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import Container from '~/components/common/Container.html'
+import ProductCard from '~/components/product/card/ProductCard.astro'
+import CategoriesList from '~/components/product/category/CategoriesList.astro'
+import { CategoriesMenu } from '~/components/product/category/CategoriesMenu.tsx'
+import IconButton from '~/components/common/IconButton.astro'
+import { Pagination } from '~/components/navigation'
+
+import IconArrowDown from '~icons/material-symbols/arrow-drop-down-rounded'
+import IconClose from '~icons/material-symbols/close-rounded'
+
+
 export const getStaticPaths = (async ({ paginate }) => {
-  const products = await getCollection('products')
-  const productsByCategory = products.reduce((acc, product) => {
-    const categoryIds = product.id.split('/').slice(0, -1)
+  const categories = await getCollection('categories')
 
-    categoryIds.forEach((categoryId, i) => {
-      // skip locale
-      if (i === 0) {
-        return
-      }
+  const page = await Promise.all(
+    categories.map(async (category) => {
+      const locale = category.id.slice(0, 2)
+      const products = await getCollection('products', ({ id }) => id.startsWith(category.id))
 
-      const key = [...categoryIds.slice(0, i), categoryId].join('/');
+      return paginate(products, {
+        params: {
+          locale: isDefaultLocale(locale) ? undefined : locale,
+          categoryId: category.id.slice(2),
+        },
+        props: { category },
+        pageSize: 9,
+      })
+    }),
+  )
 
-      (acc[key] = acc[key] || []).push(product)
-    })
-
-    return acc
-  }, {} as Record<string, CollectionEntry<'products'>[]>)
-
-  return Object.entries(productsByCategory).flatMap(([category, products]) => {
-    const [locale, ...categories] = category.split('/')
-
-    return paginate(products, {
-      params: {
-        locale: isDefaultLocale(locale) ? undefined : locale,
-        categoryId: categories.join('/'),
-      },
-    })
-  })
+  return page.flat()
 }) satisfies GetStaticPaths
 
-const { page } = Astro.props
+const locale = Astro.currentLocale!
+const { category, page } = Astro.props
+
+const categoryName = await getFullCategoryName(category)
+
+async function getFullCategoryName(category: CollectionEntry<'categories'>): Promise<string> {
+  const name = category.data.name
+
+  if (category.data.subcategoryOf === undefined) {
+    return name
+  }
+
+  const subcategory = await getEntry(category.data.subcategoryOf)
+  if (subcategory === undefined) {
+    return name
+  }
+
+  return `${name} ${(await getFullCategoryName(subcategory)).toLocaleLowerCase(locale)}`
+}
+
+const translations = await getEntry('translations', `${locale}/components/product/category/list`)
+const paginationTranslations = await getEntry('translations', `${locale}/components/navigation/pagination`)
+const t = useTranslations({
+  title: 'Categories',
+  cta: 'List categories',
+
+  label: params('Page {current} of {last}'),
+}, {
+  locale,
+  data: { ...translations?.data, ...paginationTranslations?.data },
+})
 
 ---
 
-{JSON.stringify(page)}
+<HomeLayout>
+  <Container>
+    <div class="py-16 lg:py-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none space-y-6">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ categoryName }</h1>
+          <div class="mt-6 lg:hidden">
+            <CategoriesMenu title={t.title} client:visible>
+              <div slot="open" class="max-w-max inline-flex items-center justify-center gap-2 text-zinc-700 font-medium">
+                { t.cta }
+                <IconArrowDown class="text-zinc-500 -mx-1" />
+              </div>
+              <IconButton
+                slot="close"
+                as="div"
+                icon={IconClose}
+                label="Close categories menu"
+              />
+              <CategoriesList currentCategory={category} />
+            </CategoriesMenu>
+          </div>
+        </div>
+        <hr />
+        <section aria-labelledby="products-heading">
+          <h2 id="products-heading" class="sr-only">Products</h2>
+          <div class="lg:(grid cols-3)">
+            <aside class="hidden max-w-64 text-sm lg:block">
+              <h3 class="sr-only">{ t.title }</h3>
+              <CategoriesList currentCategory={category} />
+            </aside>
+            <div class="lg:col-span-2">
+              <div class="grid cols-[repeat(auto-fill,minmax(9.75rem,1fr))] gap-x-4 gap-y-12 sm:(cols-3 gap-y-16) lg:gap-x-6">
+                {page.data.map(product => (
+                  <ProductCard product={product} />
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+        <Pagination
+          label={t.label({
+            current: `${page.currentPage}`,
+            last: `${page.lastPage}`,
+          })}
+          {...page}
+        />
+      </div>
+    </div>
+  </Container>
+</HomeLayout>

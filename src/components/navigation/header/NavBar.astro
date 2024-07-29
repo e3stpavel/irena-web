@@ -8,7 +8,7 @@ import IconButton from '~/components/common/IconButton.astro'
 
 import { locales } from '~/utils/i18n'
 import { getNavigationTranslations } from '~/data/get-navigation-translations'
-import { getTranslatedCategories } from '~/data/get-categories'
+import { getCategoryLinks } from '~/data/get-category-links'
 
 import IrenaLogo from '~/assets/brand/wordmark.svg'
 import IconMenu from '~icons/material-symbols/menu-rounded'
@@ -18,7 +18,8 @@ import IconChevronRight from '~icons/material-symbols/chevron-right-rounded'
 
 const locale = Astro.currentLocale!
 const t = await getNavigationTranslations(locale)
-const categories = await getTranslatedCategories(locale)
+
+const categoryLinks = await getCategoryLinks(locale)
 
 ---
 
@@ -42,14 +43,14 @@ const categories = await getTranslatedCategories(locale)
           label="Close mobile navigation menu"
         />
         <a slot="logo" href={getRelativeLocaleUrl(locale, '/')} hreflang={locale}>
-          <span class="sr-only">Irena</span>
+          <span class="sr-only">Irena Logo</span>
           <Image src={IrenaLogo} height="28" alt="" />
         </a>
         <Fragment>
           <div>
             <p id="products-heading" class="text-zinc-900 font-medium">{ t.products }</p>
             <ul role="list" aria-labelledby="products-heading" class="pt-6">
-              {categories.map(({ label, slug }) => (
+              {categoryLinks.map(({ label, slug }) => (
                 <li class="group relative flex items-center gap-2 px-2">
                   <IconChevronRight class="text-zinc-500 group-hover:(translate-x-1 text-indigo-500 transition-transform)" aria-hidden="true" />
                   <NavItem as="a" href={slug}>
@@ -75,7 +76,7 @@ const categories = await getTranslatedCategories(locale)
       </a>
     </div>
     <div class="hidden h-full items-center gap-12 px-4 md:flex">
-      <NavItemDropdown items={categories} client:visible>
+      <NavItemDropdown items={categoryLinks} client:visible>
         <NavItem as="span">{ t.products }</NavItem>
       </NavItemDropdown>
       <NavItem as="a" href="/">{ t.contacts }</NavItem>

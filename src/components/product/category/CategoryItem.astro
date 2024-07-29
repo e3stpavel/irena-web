@@ -1,0 +1,73 @@
+---
+import { useTranslations } from 'astro-nanointl'
+import { getEntry } from 'astro:content'
+import { type CollectionEntry, getCollection } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+
+// import IconPlus from '~icons/material-symbols/add-rounded'
+// import IconMinus from '~icons/material-symbols/remove-rounded'
+import IconUp from '~icons/material-symbols/keyboard-arrow-up-rounded'
+import IconDown from '~icons/material-symbols/keyboard-arrow-down-rounded'
+
+interface Props {
+  category: CollectionEntry<'categories'>
+  currentCategoryId: CollectionEntry<'categories'>['id']
+}
+
+const locale = Astro.currentLocale!
+const { category, currentCategoryId } = Astro.props
+
+const subcategories = await getCollection('categories', ({ id, data }) =>
+ id.startsWith(`${locale}/`) && data.subcategoryOf?.id === category.id)
+
+const translations = await getEntry('translations', `${locale}/components/product/category/item`)
+const t = useTranslations({
+  all: 'All',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+{
+  subcategories.length === 0
+   ? (
+    <a
+      class="block text-zinc-700 aria-[current=page]:text-indigo-600 hover:text-zinc-900"
+      href={getRelativeLocaleUrl(locale, category.id.slice(2))}
+      aria-current={category.id === currentCategoryId ? 'page' : 'false'}
+    >
+      { category.data.name }
+    </a>
+   )
+   : (
+    <details class="group" open={currentCategoryId.startsWith(category.id)}>
+      <summary class="flex cursor-pointer items-center gap-2 [&::-webkit-details-marker]:hidden marker:hidden">
+        { category.data.name }
+        <IconDown class="text-zinc-500 -mx-1 group-open:hidden" aria-hidden="true" />
+        <IconUp class="hidden text-zinc-500 -mx-1 group-open:block" aria-hidden="true" />
+      </summary>
+
+      <ul role="list" class="px-4 pb-2 pt-4 space-y-4">
+        <li>
+          <a
+            class="block text-zinc-700 aria-[current=page]:text-indigo-600 hover:text-zinc-900"
+            href={getRelativeLocaleUrl(locale, category.id.slice(2))}
+            aria-current={category.id === currentCategoryId ? 'page' : 'false'}
+          >
+            { t.all }
+          </a>
+        </li>
+        {subcategories.map(category => (
+          <li>
+            <Astro.self
+              category={category}
+              currentCategoryId={currentCategoryId}
+            />
+          </li>
+        ))}
+      </ul>
+    </details>
+   )
+}

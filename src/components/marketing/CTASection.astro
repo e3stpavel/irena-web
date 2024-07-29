@@ -1,0 +1,50 @@
+---
+import { getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+
+import Container from '~/components/common/Container.html'
+import Section from '~/components/common/Section.html'
+import Wrapper from '~/components/common/Wrapper.astro'
+import Button from '~/components/common/Button.astro'
+
+import IconArrowRight from '~icons/material-symbols/arrow-right-alt-rounded'
+
+
+const locale = Astro.currentLocale!
+
+const translations = await getEntry('translations', `${locale}/components/marketing/cta`)
+const t = useTranslations({
+  heading: 'Didn\'t find what you were looking for?',
+  paragraph: 'Feel free to discover all our available products and categories',
+  cta: 'See all products',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<div class="bg-indigo-700">
+  <Container>
+    <Section>
+      <Wrapper
+        title={t.heading}
+        description={t.paragraph}
+        variant="onSurface"
+      >
+        <Button
+          as="a"
+          href="/"
+          hreflang={locale}
+          label={t.cta}
+          variant="onSurface"
+          size="lg"
+          icon={{
+            component: IconArrowRight,
+            position: 'trailing',
+          }}
+        />
+      </Wrapper>
+    </Section>
+  </Container>
+</div>

@@ -1,0 +1,58 @@
+---
+import { getCollection, getEntry } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { useTranslations } from 'astro-nanointl'
+import { shuffle } from '~/utils/shuffle'
+
+import ProductCard from '~/components/product/card/ProductCard.astro'
+import Link from '~/components/common/Link.astro'
+
+import IconArrowRight from '~icons/material-symbols/chevron-right-rounded'
+
+interface Props {
+  categoryId: string
+}
+
+const locale = Astro.currentLocale!
+const { categoryId } = Astro.props
+
+const category = await getEntry('categories', categoryId)
+if (category === undefined) {
+  throw new Error('Category was not found')
+}
+
+const products = shuffle(
+  await getCollection('products', ({ id }) => id.startsWith(category.id)),
+).slice(0, 6)
+
+const translations = await getEntry('translations', `${locale}/components/product/category-preview`)
+const t = useTranslations({
+  seeAll: 'See all',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<div class="mx-auto max-w-2xl py-8 lg:(grid cols-3 max-w-none items-start py-16) sm:py-12">
+  <div class="flex items-center justify-between lg:block">
+    <h3 class="text-xl font-semibold lg:mb-4">{ category.data.name }</h3>
+    <Link
+      href={getRelativeLocaleUrl(locale, category.id.slice(2))}
+      hreflang={locale}
+      label={t.seeAll}
+      icon={{
+        component: IconArrowRight,
+        position: 'trailing',
+      }}
+    />
+  </div>
+  <div class="mt-3 snap-x snap-mandatory overflow-x-auto px-4 lg:(col-span-2 mt-0) -mx-4 sm:(mx-0 overflow-x-visible px-0)">
+    <div class="inline-grid auto-cols-56 auto-flow-col gap-4 sm:(auto-cols-auto auto-flow-row cols-3 gap-y-16) lg:gap-x-6">
+      {products.map(product => (
+        <ProductCard product={product} />
+      ))}
+    </div>
+  </div>
+</div>

@@ -1,0 +1,54 @@
+---
+import { getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+
+import Button from '~/components/common/Button.astro'
+
+import IrenaSymbol from '~/assets/brand/logomark.svg?raw'
+// import IconConfetti from '~/assets/brand/confetti.svg?raw'
+import IconArrowRight from '~icons/material-symbols/arrow-right-alt-rounded'
+
+
+const locale = Astro.currentLocale!
+
+const translations = await getEntry('translations', `${locale}/components/marketing/hero/heading`)
+const t = useTranslations({
+  heading: 'Natural Delicious Homemade',
+  paragraph: 'Confectionery products from the mini-patisserie "Irena" to satisfy your sweetest desires',
+
+  cta: 'Discover products',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+const heading = t.heading.split(' ')
+
+---
+
+<div class="mx-auto max-w-2xl lg:pt-8">
+  <h1 class="max-w-min text-4xl font-bold tracking-tight capitalize sm:text-6xl">
+    { heading.slice(0, -1).join(' ') }
+    <span class="inline-flex gap-1">
+      { heading.at(-1) }
+      <span class="text-rose-500" aria-hidden="true">
+        <Fragment set:html={IrenaSymbol} />
+      </span>
+    </span>
+  </h1>
+  <p class="mt-6 text-lg text-zinc-700 leading-8">{ t.paragraph }</p>
+  <div class="mt-10">
+    <Button
+      as="a"
+      href="/"
+      hreflang={locale}
+      label={t.cta}
+      variant="primary"
+      size="lg"
+      icon={{
+        component: IconArrowRight,
+        position: 'trailing',
+      }}
+    />
+  </div>
+</div>
