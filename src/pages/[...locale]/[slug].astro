@@ -1,0 +1,107 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection, getEntry } from 'astro:content'
+import { format, useTranslations } from 'astro-nanointl'
+import { isDefaultLocale } from '~/utils/i18n'
+
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import Container from '~/components/common/Container.html'
+import { BrandPattern } from '~/components/marketing'
+import { LocaleSwitcher } from '~/components/navigation'
+
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages')
+
+  return pages.map((page) => {
+    const [locale, slug] = page.slug.split('/')
+    return {
+      params: {
+        locale: isDefaultLocale(locale) ? undefined : locale,
+        slug,
+      },
+      props: { page },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const locale = Astro.currentLocale!
+
+const { page } = Astro.props
+const { Content } = await page.render()
+
+const translations = await getEntry('translations', `${locale}/components/marketing/legal`)
+const t = useTranslations({
+  lastUpdate: 'Last updated',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+const altPages = (
+  await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId)
+).map(page => page.slug)
+
+---
+
+<HomeLayout>
+  <LocaleSwitcher
+    slot="locale-switcher"
+    links={altPages}
+  />
+  <div class="relative z-0 bg-indigo-700 text-white">
+    <BrandPattern />
+    <Container>
+      <div class="pb-12 pt-16 lg:pt-24">
+        <div class="mx-auto max-w-2xl lg:max-w-none">
+          <h1 class="text-3xl font-bold tracking-tight hyphens-auto sm:text-4xl">{ page.data.title }</h1>
+          <p class="mt-6 text-indigo-100 leading-7">
+            {page.data.description}
+            {page.data.updatedAt && (
+              <>
+                { t.lastUpdate }
+                <time datetime={page.data.updatedAt.toISOString()}>
+                  {format(locale).date(page.data.updatedAt, {
+                    dateStyle: 'short',
+                  })}
+                </time>
+              </>
+            )}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <Container>
+    <div class="pb-16 pt-12 lg:pb-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <div class="underline-offset-5 prose prose-zinc">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </Container>
+  {/* <Container>
+    <div class="py-16 lg:py-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none space-y-6">
+        <div>
+          <h1 class="text-3xl font-bold tracking-tight hyphens-auto sm:text-4xl">{ page.data.title }</h1>
+          {page.data.updatedAt && (
+            <p class="mt-6 text-zinc-700">
+              { t.lastUpdate }
+              <time datetime={page.data.updatedAt.toISOString()}>
+                {format(locale).date(page.data.updatedAt, {
+                  dateStyle: 'short',
+                })}
+              </time>
+            </p>
+          )}
+        </div>
+        <hr />
+        <div class="underline-offset-5 prose prose-zinc">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </Container> */}
+</HomeLayout>

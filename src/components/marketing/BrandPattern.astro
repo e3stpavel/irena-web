@@ -1,0 +1,12 @@
+---
+import { getImage } from 'astro:assets'
+import pattern from '~/assets/brand/pattern.svg'
+
+const backgroundPattern = await getImage({ src: pattern })
+
+---
+
+<div
+  class="absolute inset-0 from-indigo-500/40 to-indigo-600/20 bg-gradient-to-r -z-1"
+  style={`mask: url(${backgroundPattern.src}) repeat;`}
+/>

@@ -5,6 +5,7 @@ const categories = defineCollection({
   type: 'data',
   schema: z.object({
     name: z.string(),
+    canonicalId: z.string(),
     subcategoryOf: z.optional(reference('categories')),
   }),
 })
@@ -29,6 +30,16 @@ const productDetails = defineCollection({
   }),
 })
 
+const pages = defineCollection({
+  type: 'content',
+  schema: z.object({
+    title: z.string(),
+    canonicalId: z.string(),
+    description: z.string().optional(),
+    updatedAt: z.date().optional(),
+  }),
+})
+
 const translations = defineCollection({
   type: 'data',
   schema: translationsSchema,
@@ -38,5 +49,6 @@ export const collections = {
   products,
   categories,
   'product-details': productDetails,
+  pages,
   translations,
 }

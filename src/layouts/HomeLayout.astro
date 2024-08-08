@@ -1,14 +1,30 @@
 ---
 import BaseLayout from './BaseLayout.astro'
-import { Footer, NavBar } from '~/components/navigation'
+import { locales } from '~/utils/i18n'
+import { Footer, LocaleSwitcher, NavBar } from '~/components/navigation'
+
+const altIndexPages = locales.map(locale => `${locale}/`)
+
 ---
 
 <BaseLayout>
   <slot name="head" slot="head" />
 
   <Fragment slot="header">
+    <noscript>
+      <div class="flex items-center justify-center bg-rose-700 px-4 py-2 sm:(px-6 py-3)">
+        <p class="text-sm text-white leading-6">
+          <strong>JavaScript is disabled!</strong>
+          Some features may not be available.
+        </p>
+      </div>
+    </noscript>
     <slot name="announcements" />
-    <NavBar />
+    <NavBar>
+      <slot name="locale-switcher">
+        <LocaleSwitcher links={altIndexPages} />
+      </slot>
+    </NavBar>
   </Fragment>
 
   <slot />

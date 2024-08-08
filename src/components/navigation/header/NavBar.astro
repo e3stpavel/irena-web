@@ -5,10 +5,11 @@ import NavItem from './NavBarItem.astro'
 import { NavItemDropdown } from './NavItemDropdown.tsx'
 import { NavMenu } from './NavMenu.tsx'
 import IconButton from '~/components/common/IconButton.astro'
+import Button from '~/components/common/Button.astro'
 
-import { locales } from '~/utils/i18n'
 import { getNavigationTranslations } from '~/data/get-navigation-translations'
 import { getCategoryLinks } from '~/data/get-category-links'
+import { getLinkToPage } from '~/data/get-link-to-page'
 
 import IrenaLogo from '~/assets/brand/wordmark.svg'
 import IconMenu from '~icons/material-symbols/menu-rounded'
@@ -20,13 +21,20 @@ const locale = Astro.currentLocale!
 const t = await getNavigationTranslations(locale)
 
 const categoryLinks = await getCategoryLinks(locale)
+const contactsLink = await getLinkToPage(locale, 'contacts')
 
 ---
 
 <nav class="mx-auto max-w-screen-xl lg:px-8 sm:px-6">
   <div class="relative h-16 flex items-center justify-between gap-4 border-b px-4 sm:px-0">
-    <div class="sr-only focus-within:(not-sr-only absolute inset-y-0 left-0 min-w-1/4 flex items-center bg-white px-4 sm:px-0)">
-      <a href="#0" class="text-zinc-900 font-medium sm:text-sm">Skip to content</a>
+    <div class="sr-only focus-within:(not-sr-only absolute inset-0 flex items-center justify-center)">
+      <Button
+        as="a"
+        href="#content"
+        label="Skip to content"
+        variant="primary"
+        size="sm"
+      />
     </div>
     <div class="flex md:hidden">
       <NavMenu client:visible>
@@ -62,7 +70,7 @@ const categoryLinks = await getCategoryLinks(locale)
             </ul>
           </div>
           <div class="flex">
-            <NavItem as="a" href="/">
+            <NavItem as="a" href={contactsLink}>
               { t.contacts }
             </NavItem>
           </div>
@@ -79,12 +87,10 @@ const categoryLinks = await getCategoryLinks(locale)
       <NavItemDropdown items={categoryLinks} client:visible>
         <NavItem as="span">{ t.products }</NavItem>
       </NavItemDropdown>
-      <NavItem as="a" href="/">{ t.contacts }</NavItem>
+      <NavItem as="a" href={contactsLink}>{ t.contacts }</NavItem>
     </div>
-    <div class="flex flex-1 items-center justify-end -mr-3">
-      {locales.map(locale => (
-        <a href={getRelativeLocaleUrl(locale, '/')} class="px-3 py-2 text-sm text-zinc-500 font-medium tracking-wide hover:text-zinc-600">{ locale.toUpperCase() }</a>
-      ))}
+    <div class="flex-1">
+      <slot />
     </div>
   </div>
 </nav>

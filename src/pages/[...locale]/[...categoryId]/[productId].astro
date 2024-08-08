@@ -8,7 +8,7 @@ import { isDefaultLocale } from '~/utils/i18n'
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
 import { OrderSection } from '~/components/marketing'
-import { Breadcrumbs } from '~/components/navigation'
+import { Breadcrumbs, LocaleSwitcher } from '~/components/navigation'
 
 
 export const getStaticPaths = (async () => {
@@ -50,9 +50,17 @@ const t = useTranslations({
   data: translations?.data,
 })
 
+const altProducts = (
+  await getCollection('products', ({ data }) => data.details.id === details.id)
+).map(product => product.id)
+
 ---
 
 <HomeLayout>
+  <LocaleSwitcher
+    slot="locale-switcher"
+    links={altProducts}
+  />
   <Container>
     <div class="py-16 sm:py-24">
       <div class="mx-auto max-w-2xl lg:max-w-none">

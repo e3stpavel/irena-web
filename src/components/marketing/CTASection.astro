@@ -2,6 +2,7 @@
 import { getEntry } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
 
+import BrandPattern from './BrandPattern.astro'
 import Container from '~/components/common/Container.html'
 import Section from '~/components/common/Section.html'
 import Wrapper from '~/components/common/Wrapper.astro'
@@ -24,7 +25,8 @@ const t = useTranslations({
 
 ---
 
-<div class="bg-indigo-700">
+<div class="relative z-0 bg-indigo-700">
+  <BrandPattern />
   <Container>
     <Section>
       <Wrapper

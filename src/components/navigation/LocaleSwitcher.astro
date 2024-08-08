@@ -1,0 +1,28 @@
+---
+import { getRelativeLocaleUrl } from 'astro:i18n'
+import { locales } from '~/utils/i18n'
+
+interface Props {
+  // TODO: maybe make this type a bit better
+  links: string[]
+}
+
+const { links } = Astro.props
+
+---
+
+<div class="flex items-center justify-end gap-6">
+  {locales.map((locale) => {
+    const link = links.find(link => link.startsWith(`${locale}/`))
+
+    return (
+      <a
+        href={link !== undefined ? getRelativeLocaleUrl(locale, link.slice(2)) : getRelativeLocaleUrl(locale, '/')}
+        hreflang={locale}
+        class="text-sm text-zinc-500 font-medium tracking-wide uppercase hover:text-zinc-600"
+      >
+        { locale.toLocaleUpperCase(locale) }
+      </a>
+    )
+  })}
+</div>
