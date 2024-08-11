@@ -2,13 +2,10 @@ import type { Page } from 'astro'
 import { Pagination as ArkPagination } from '@ark-ui/solid'
 import { type Component, For } from 'solid-js'
 import { Trigger } from './Trigger'
+import { removeDoubleSlashes } from '~/utils/url'
 
 interface Props extends Omit<Page<any>, 'data'> {
   label: string
-}
-
-function removeDoubleSlashes(url?: string) {
-  return url?.replaceAll(/\/{2,}/g, '/')
 }
 
 export const Pagination: Component<Props> = props => (

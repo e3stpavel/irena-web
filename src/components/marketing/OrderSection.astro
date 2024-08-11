@@ -1,8 +1,9 @@
 ---
-import { useTranslations } from 'astro-nanointl'
 import { getEntry } from 'astro:content'
-
+import { useTranslations } from 'astro-nanointl'
 import { args } from 'astro-nanointl/transformers'
+import { getLinkToPage } from '~/data/get-link-to-page'
+
 import Container from '~/components/common/Container.html'
 
 import IconSearch from '~icons/material-symbols/category-search-rounded'
@@ -28,6 +29,8 @@ const t = useTranslations({
   locale,
   data: translations?.data,
 })
+
+const contactsLink = await getLinkToPage(locale, 'contacts')
 
 ---
 
@@ -63,7 +66,7 @@ const t = useTranslations({
                 return (
                   <>
                     { slices[0] }
-                    <a href="/" class="text-zinc-900 underline underline-offset-2 hover:no-underline">{ t.contactCta }</a>
+                    <a href={contactsLink} hreflang={locale} class="text-zinc-900 underline underline-offset-2 hover:no-underline">{ t.contactCta }</a>
                     { slices[1] }
                   </>
                 )

@@ -1,12 +1,14 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, getEntry } from 'astro:content'
-import { Image } from 'astro:assets'
+import { Image, getImage } from 'astro:assets'
 import { format, useTranslations } from 'astro-nanointl'
+import { params } from 'astro-nanointl/transformers'
 import { isDefaultLocale } from '~/utils/i18n'
 
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
+import Head from '~/components/common/Head.astro'
 import { OrderSection } from '~/components/marketing'
 import { Breadcrumbs, LocaleSwitcher } from '~/components/navigation'
 
@@ -42,21 +44,46 @@ if (category === undefined) {
 }
 
 const translations = await getEntry('translations', `${locale}/components/product/card`)
+const ogTranslations = await getEntry('translations', `${locale}/components/product/og`)
 const t = useTranslations({
   kg: 'kg',
   pc: 'pc',
+
+  ogProductTitle: params('{productName}: review, price and how to order. Discover homemade confectionery products from the mini-patisserie "Irena"'),
+  ogImageAlt: params('A picture with an image of a product from the \'{categoryName}\' category, the name of this category and the logo of the mini-patisserie "Irena"'),
 }, {
   locale,
-  data: translations?.data,
+  data: { ...translations?.data, ...ogTranslations?.data },
 })
 
 const altProducts = (
   await getCollection('products', ({ data }) => data.details.id === details.id)
 ).map(product => product.id)
 
+const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
+
 ---
 
 <HomeLayout>
+  <Head
+    slot="head"
+    title={product.data.name}
+    languageAlternates={altProducts}
+    openGraph={{
+      basic: {
+        title: t.ogProductTitle({ productName: product.data.name }),
+        type: 'website',
+        image: ogImage.src,
+      },
+      image: {
+        alt: t.ogImageAlt({ categoryName: category.data.name }),
+        type: 'image/webp',
+      },
+      optional: {
+        locale,
+      },
+    }}
+  />
   <LocaleSwitcher
     slot="locale-switcher"
     links={altProducts}

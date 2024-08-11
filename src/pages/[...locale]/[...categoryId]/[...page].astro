@@ -1,12 +1,15 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { type CollectionEntry, getCollection, getEntry } from 'astro:content'
+import { getImage } from 'astro:assets'
 import { useTranslations } from 'astro-nanointl'
 import { params } from 'astro-nanointl/transformers'
 import { isDefaultLocale } from '~/utils/i18n'
+import { removeDoubleSlashes } from '~/utils/url'
 
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
+import Head from '~/components/common/Head.astro'
 import ProductCard from '~/components/product/card/ProductCard.astro'
 import CategoriesList from '~/components/product/category/CategoriesList.astro'
 import { CategoriesMenu } from '~/components/product/category/CategoriesMenu.tsx'
@@ -61,23 +64,49 @@ async function getFullCategoryName(category: CollectionEntry<'categories'>): Pro
 
 const translations = await getEntry('translations', `${locale}/components/product/category/list`)
 const paginationTranslations = await getEntry('translations', `${locale}/components/navigation/pagination`)
+const ogTranslations = await getEntry('translations', `${locale}/components/product/og`)
 const t = useTranslations({
   title: 'Categories',
   cta: 'List categories',
 
   label: params('Page {current} of {last}'),
+
+  ogCategoryTitle: params('{categoryName}: discover more homemade confectionery products from the mini-patisserie "Irena"'),
+  ogImageAlt: params('A picture with an image of a product from the \'{categoryName}\' category, the name of this category and the logo of the mini-patisserie "Irena"'),
 }, {
   locale,
-  data: { ...translations?.data, ...paginationTranslations?.data },
+  data: { ...translations?.data, ...paginationTranslations?.data, ...ogTranslations?.data },
 })
 
 const altCategories = (
   await getCollection('categories', ({ data }) => data.canonicalId === category.data.canonicalId)
 ).map(category => category.id)
 
+const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
+
 ---
 
 <HomeLayout>
+  <Head
+    slot="head"
+    title={categoryName}
+    languageAlternates={altCategories}
+    canonical={page.url.first && new URL(`${removeDoubleSlashes(page.url.first)!}/`, Astro.url)}
+    openGraph={{
+      basic: {
+        title: t.ogCategoryTitle({ categoryName: category.data.name }),
+        type: 'website',
+        image: ogImage.src,
+      },
+      image: {
+        alt: t.ogImageAlt({ categoryName: category.data.name }),
+        type: 'image/webp',
+      },
+      optional: {
+        locale,
+      },
+    }}
+  />
   <LocaleSwitcher
     slot="locale-switcher"
     links={altCategories}

@@ -3,9 +3,10 @@ import { translationsSchema } from 'astro-nanointl'
 
 const categories = defineCollection({
   type: 'data',
-  schema: z.object({
+  schema: ({ image }) => z.object({
     name: z.string(),
     canonicalId: z.string(),
+    ogImage: image(),
     subcategoryOf: z.optional(reference('categories')),
   }),
 })

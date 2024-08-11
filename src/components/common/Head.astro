@@ -1,0 +1,30 @@
+---
+import { getEntry } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+import { SEO, type SEOProps } from 'astro-seo'
+import { getAltLinks } from '~/data/get-alt-links'
+
+export interface Props extends Omit<SEOProps, 'languageAlternates'> {
+  languageAlternates?: string[]
+}
+
+const locale = Astro.currentLocale!
+const { languageAlternates, titleDefault: _d, titleTemplate: _t, ...rest } = Astro.props
+
+const translations = await getEntry('translations', `${locale}/components/head`)
+const t = useTranslations({
+  title: '%s • Mini-patisserie "Irena"',
+  fallback: 'Homemade confectionery products',
+}, {
+  locale,
+  data: translations?.data,
+})
+
+---
+
+<SEO
+  titleTemplate={t.title}
+  titleDefault={t.title.replace(/%s/g, t.fallback)}
+  languageAlternates={languageAlternates && getAltLinks(languageAlternates)}
+  {...rest}
+/>

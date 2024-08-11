@@ -7,6 +7,8 @@ import { locales } from './i18n.config'
 
 // https://astro.build/config
 export default defineConfig({
+  site: 'http://localhost:4321',
+
   integrations: [
     unocss({
       injectReset: true,

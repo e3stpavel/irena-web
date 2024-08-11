@@ -1,13 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { getCollection, getEntry } from 'astro:content'
+import { getImage } from 'astro:assets'
 import { format, useTranslations } from 'astro-nanointl'
 import { isDefaultLocale } from '~/utils/i18n'
 
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
+import Head from '~/components/common/Head.astro'
 import { BrandPattern } from '~/components/marketing'
 import { LocaleSwitcher } from '~/components/navigation'
+import OpenGraphImage from '~/assets/og.png'
 
 
 export const getStaticPaths = (async () => {
@@ -31,20 +34,48 @@ const { page } = Astro.props
 const { Content } = await page.render()
 
 const translations = await getEntry('translations', `${locale}/components/marketing/legal`)
+const ogTranslations = await getEntry('translations', `${locale}/components/marketing/og`)
 const t = useTranslations({
   lastUpdate: 'Last updated',
+
+  ogTitle: 'Homemade confectionery products made from natural ingredients. Discover our products right now!',
+  ogDescription: 'Mini-patisserie "Irena"',
+  ogImageAlt: 'OpenGraph image with the title and logo of the mini-patisserie "Irena"',
 }, {
   locale,
-  data: translations?.data,
+  data: { ...translations?.data, ...ogTranslations?.data },
 })
 
 const altPages = (
   await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId)
 ).map(page => page.slug)
 
+const ogImage = await getImage({ src: OpenGraphImage, format: 'webp' })
+
 ---
 
 <HomeLayout>
+  <Head
+    slot="head"
+    title={page.data.title}
+    description={page.data.description}
+    languageAlternates={altPages}
+    openGraph={{
+      basic: {
+        title: `${page.data.title} - ${t.ogTitle}`,
+        type: 'website',
+        image: ogImage.src,
+      },
+      image: {
+        alt: t.ogImageAlt,
+        type: 'image/webp',
+      },
+      optional: {
+        description: t.ogDescription,
+        locale,
+      },
+    }}
+  />
   <LocaleSwitcher
     slot="locale-switcher"
     links={altPages}

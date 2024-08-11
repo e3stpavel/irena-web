@@ -28,7 +28,7 @@ const t = {
     issue: 'Found an issue or a bug?',
     issueAction: 'Report here',
 
-    privacy: 'We do not track you or use your cookies.',
+    privacy: 'We do not track your activity or use your cookies.',
     copyright: 'All rights reserved.',
   }, {
     locale,
@@ -120,7 +120,7 @@ const privacyLink = await getLinkToPage(locale, 'privacy')
           </p>
         </div>
         <div>
-          <div class="max-w-xs">
+          <div class="md:max-w-xs">
             <p class="inline">{ t.privacy }</p>
             <a
               href={privacyLink}

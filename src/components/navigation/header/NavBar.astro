@@ -57,7 +57,7 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
         <Fragment>
           <div>
             <p id="products-heading" class="text-zinc-900 font-medium">{ t.products }</p>
-            <ul role="list" aria-labelledby="products-heading" class="pt-6">
+            <ul role="list" aria-labelledby="products-heading" class="pt-6 space-y-6">
               {categoryLinks.map(({ label, slug }) => (
                 <li class="group relative flex items-center gap-2 px-2">
                   <IconChevronRight class="text-zinc-500 group-hover:(translate-x-1 text-indigo-500 transition-transform)" aria-hidden="true" />

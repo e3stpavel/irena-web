@@ -9,7 +9,7 @@ interface Props {
 
 export const CategoriesMenu: FlowComponent<Props> = props => (
   <Dialog.Root>
-    <Dialog.Trigger>{ props.open }</Dialog.Trigger>
+    <Dialog.Trigger class="focus-visible:(outline-none ring)">{ props.open }</Dialog.Trigger>
     <Dialog.Backdrop class="fixed inset-0 z-1 bg-zinc-900/5" />
     <Dialog.Positioner class="fixed inset-0 z-1">
       <Dialog.Content class="h-full max-w-xs overflow-y-auto bg-white ring-1 ring-zinc-900/5">
