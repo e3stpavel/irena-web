@@ -44,16 +44,25 @@ if (category === undefined) {
 }
 
 const translations = await getEntry('translations', `${locale}/components/product/card`)
+const pageTranslations = await getEntry('translations', `${locale}/components/product/page`)
 const ogTranslations = await getEntry('translations', `${locale}/components/product/og`)
 const t = useTranslations({
   kg: 'kg',
   pc: 'pc',
 
+  information: 'Product information',
+  composition: 'Composition',
+  notes: 'Notes',
+
   ogProductTitle: params('{productName}: review, price and how to order. Discover homemade confectionery products from the mini-patisserie "Irena"'),
   ogImageAlt: params('A picture with an image of a product from the \'{categoryName}\' category, the name of this category and the logo of the mini-patisserie "Irena"'),
 }, {
   locale,
-  data: { ...translations?.data, ...ogTranslations?.data },
+  data: {
+    ...translations?.data,
+    ...ogTranslations?.data,
+    ...pageTranslations?.data,
+  },
 })
 
 const altProducts = (
@@ -68,6 +77,7 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
   <Head
     slot="head"
     title={product.data.name}
+    description="TODO:"
     languageAlternates={altProducts}
     openGraph={{
       basic: {
@@ -93,16 +103,16 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
       <div class="mx-auto max-w-2xl lg:max-w-none">
         <Breadcrumbs category={category} />
         <div class="mt-4 flex flex-col items-start gap-12 lg:flex-row">
-          <div class="lg:w-xl">
+          <div class="w-full lg:w-xl">
             <div class="aspect-square overflow-hidden rounded-xl bg-zinc-200">
-              <Image src={details.data.thumbnail} alt={product.data.name} class="object-fit size-full object-cover" />
+              <Image src={details.data.thumbnail} alt={product.data.name} class="object-fit size-full object-cover" loading="eager" />
             </div>
           </div>
           <div class="flex-1">
             <div class="lg:w-md">
               <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ product.data.name }</h1>
               <div class="mt-4">
-                <h2 class="sr-only">Product information</h2>
+                <h2 class="sr-only">{ t.information }</h2>
                 <p class="text-3xl text-indigo-600 font-semibold tracking-tighter">
                   {format(locale).number(details.data.price, {
                     currency: 'EUR',
@@ -116,7 +126,7 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
               <div class="lg:w-md">
                 <div class="prose prose-zinc">
                   <div>
-                    <h3 class="not-prose text-zinc-900 font-semibold">Состав:</h3>
+                    <h3 class="not-prose text-zinc-900 font-semibold">{ t.composition }:</h3>
                     <ul class="my-2">
                       {product.data.composition.map(composable => (
                         <li>{ composable }</li>
@@ -125,7 +135,7 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
                   </div>
                   {product.data.notes && (
                     <div class="mt-8">
-                      <h3 class="not-prose text-zinc-900 font-semibold">Примечания:</h3>
+                      <h3 class="not-prose text-zinc-900 font-semibold">{ t.notes }:</h3>
                       <p class="my-2">{ product.data.notes }</p>
                     </div>
                   )}

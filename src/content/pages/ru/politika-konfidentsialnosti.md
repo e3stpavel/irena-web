@@ -1,6 +1,7 @@
 ---
 title: Политика конфиденциальности
 canonicalId: privacy
+description: Политика конфиденциальности мини-кондитерской "Irena"
 updatedAt: 2024-06-08
 ---
 

@@ -25,7 +25,7 @@ const products = shuffle(
   await getCollection('products', ({ id }) => id.startsWith(category.id)),
 ).slice(0, 6)
 
-const translations = await getEntry('translations', `${locale}/components/product/category-preview`)
+const translations = await getEntry('translations', `${locale}/components/product/category/preview`)
 const t = useTranslations({
   seeAll: 'See all',
 }, {

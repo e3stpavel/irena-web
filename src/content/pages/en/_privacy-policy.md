@@ -1,6 +1,7 @@
 ---
 title: Privacy policy
 canonicalId: privacy
+description: Mini-patisserie "Irena" privacy policy
 updatedAt: 2024-06-08
 ---
 

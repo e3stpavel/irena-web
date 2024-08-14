@@ -16,6 +16,7 @@
     "@astrojs/solid-js": "^4.4.1",
     "astro": "^4.13.3",
     "astro-seo": "^0.8.4",
+    "sharp": "^0.33.4",
     "solid-js": "^1.8.20",
     "typescript": "^5.5.4"
   },

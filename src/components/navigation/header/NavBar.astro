@@ -56,8 +56,8 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
         </a>
         <Fragment>
           <div>
-            <p id="products-heading" class="text-zinc-900 font-medium">{ t.products }</p>
-            <ul role="list" aria-labelledby="products-heading" class="pt-6 space-y-6">
+            <p id="products-category-heading" class="text-zinc-900 font-medium">{ t.products }</p>
+            <ul role="list" aria-labelledby="products-category-heading" class="pt-6 space-y-6">
               {categoryLinks.map(({ label, slug }) => (
                 <li class="group relative flex items-center gap-2 px-2">
                   <IconChevronRight class="text-zinc-500 group-hover:(translate-x-1 text-indigo-500 transition-transform)" aria-hidden="true" />
@@ -79,7 +79,7 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
     </div>
     <div class="min-w-fit flex flex-1">
       <a href={getRelativeLocaleUrl(locale, '/')} hreflang={locale}>
-        <span class="sr-only">Irena</span>
+        <span class="sr-only">Irena logo</span>
         <Image src={IrenaLogo} height="28" alt="" loading="eager" />
       </a>
     </div>

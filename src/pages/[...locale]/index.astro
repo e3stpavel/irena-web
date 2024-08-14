@@ -1,14 +1,11 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { useTranslations } from 'astro-nanointl'
-import { getEntry } from 'astro:content'
-import { getImage } from 'astro:assets'
 import { isDefaultLocale, locales } from '~/utils/i18n'
 
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import { CategoriesSection, CtaSection, HeroSection } from '~/components/marketing'
 import Head from '~/components/common/Head.astro'
-import OpenGraphImage from '~/assets/og.png'
 
 
 export const getStaticPaths = (() => {
@@ -29,19 +26,12 @@ const translations: Record<string, Record<string, string>> = {
     title: 'Koduleht',
   },
 }
-const ogTranslations = await getEntry('translations', `${locale}/components/marketing/og`)
 const t = useTranslations({
   title: 'Home',
-
-  ogTitle: 'Homemade confectionery products made from natural ingredients. Discover our products right now!',
-  ogDescription: 'Mini-patisserie "Irena"',
-  ogImageAlt: 'OpenGraph image with the title and logo of the mini-patisserie "Irena"',
 }, {
   locale,
-  data: { ...translations[locale], ...ogTranslations?.data },
+  data: translations[locale],
 })
-
-const ogImage = await getImage({ src: OpenGraphImage, format: 'webp' })
 
 ---
 
@@ -50,21 +40,6 @@ const ogImage = await getImage({ src: OpenGraphImage, format: 'webp' })
     slot="head"
     title={t.title}
     languageAlternates={locales.map(locale => `${locale}/`)}
-    openGraph={{
-      basic: {
-        title: t.ogTitle,
-        type: 'website',
-        image: ogImage.src,
-      },
-      image: {
-        alt: t.ogImageAlt,
-        type: 'image/webp',
-      },
-      optional: {
-        description: t.ogDescription,
-        locale,
-      },
-    }}
   />
   <HeroSection />
   <CategoriesSection />

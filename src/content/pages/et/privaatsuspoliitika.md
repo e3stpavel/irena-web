@@ -1,6 +1,7 @@
 ---
 title: Andmekaitsetingimused
 canonicalId: privacy
+description: Mini-kondiitriäri "Irena" privaatsuspoliitika
 updatedAt: 2024-06-08
 ---
 

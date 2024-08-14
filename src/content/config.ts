@@ -36,7 +36,7 @@ const pages = defineCollection({
   schema: z.object({
     title: z.string(),
     canonicalId: z.string(),
-    description: z.string().optional(),
+    description: z.string(),
     updatedAt: z.date().optional(),
   }),
 })

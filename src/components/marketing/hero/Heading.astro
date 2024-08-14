@@ -11,7 +11,7 @@ import IconArrowRight from '~icons/material-symbols/arrow-right-alt-rounded'
 
 const locale = Astro.currentLocale!
 
-const translations = await getEntry('translations', `${locale}/components/marketing/hero/heading`)
+const translations = await getEntry('translations', `${locale}/components/marketing/hero`)
 const t = useTranslations({
   heading: 'Natural Delicious Homemade',
   paragraph: 'Confectionery products from the mini-patisserie "Irena" to satisfy your sweetest desires',

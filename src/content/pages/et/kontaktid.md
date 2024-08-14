@@ -1,9 +1,10 @@
 ---
 title: Võtke meiega ühendust
+description: Kasutage meie toodete tellimiseks meie kontakte
 canonicalId: contacts
 ---
 
-Lorem ipsum dolor sit amet consectetur, adipisicing elit. Itaque illum consequuntur sapiente tenetur perspiciatis! Vel eius repellendus enim nemo officiis aliquid, error explicabo veritatis alias optio fugiat, odit officia, fugit maxime rem delectus necessitatibus. Culpa perspiciatis voluptatem numquam cum? Ex vel tenetur nobis, natus ratione vero ipsa totam quibusdam reiciendis.
+Mini-kondiitriäri "Irena" pakub omatehtud kondiitritooteid Lääne-Harju vallas ja Paldiski linnas. Usume, et ainult looduslikud ja kodumaised tooted ning kodune soojus ja armastus muudavad meie tooted tõeliselt maitsvaks. Võtke meiega julgelt ühendust igal Teile sobival viisil, et meilt midagi maitsvat tellida.
 
 <br />
 

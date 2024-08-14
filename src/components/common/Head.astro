@@ -1,5 +1,7 @@
 ---
+import type { ImageMetadata } from 'astro'
 import { getEntry } from 'astro:content'
+import { getImage } from 'astro:assets'
 import { useTranslations } from 'astro-nanointl'
 import { SEO, type SEOProps } from 'astro-seo'
 import { getAltLinks } from '~/data/get-alt-links'
@@ -12,19 +14,44 @@ const locale = Astro.currentLocale!
 const { languageAlternates, titleDefault: _d, titleTemplate: _t, ...rest } = Astro.props
 
 const translations = await getEntry('translations', `${locale}/components/head`)
+const ogTranslations = await getEntry('translations', `${locale}/components/marketing/og`)
 const t = useTranslations({
   title: '%s • Mini-patisserie "Irena"',
   fallback: 'Homemade confectionery products',
+  description: 'Discover best homemade confectionery products from natural and domestic ingredients in Lääne-Harju county and Paldiski town',
+
+  ogTitle: 'Homemade confectionery products made from natural ingredients. Discover our products right now!',
+  ogDescription: 'Mini-patisserie "Irena"',
+  ogImageAlt: 'OpenGraph image with the title and logo of the mini-patisserie "Irena"',
 }, {
   locale,
-  data: translations?.data,
+  data: { ...translations?.data, ...ogTranslations?.data },
 })
+
+const ogImageSrc = await import(`../../assets/brand/og/${locale}.png`) as { default: ImageMetadata }
+const ogImage = await getImage({ src: ogImageSrc.default, format: 'webp' })
 
 ---
 
 <SEO
   titleTemplate={t.title}
   titleDefault={t.title.replace(/%s/g, t.fallback)}
-  languageAlternates={languageAlternates && getAltLinks(languageAlternates)}
+  description={t.description}
+  languageAlternates={languageAlternates && getAltLinks(languageAlternates, true)}
+  openGraph={{
+    basic: {
+      title: t.ogTitle,
+      type: 'website',
+      image: ogImage.src,
+    },
+    image: {
+      alt: t.ogImageAlt,
+      type: 'image/webp',
+    },
+    optional: {
+      description: t.ogDescription,
+      locale,
+    },
+  }}
   {...rest}
 />
