@@ -8,29 +8,8 @@ canonicalId: contacts
 
 <br />
 
-<div class="grid gap-x-4 gap-y-4 sm:cols-2">
-  <div>
+<a href="https://www.facebook.com/share/voKFtr7EnnxvHERX/" target="_blank" rel="noopener">Facebook</a>
 
-  ##### Телефон
-  +372 583470920
+[Whatsapp](#)
 
-  </div>
-
-  <div>
-
-  ##### Элеткронная почта
-  info@irena.ee
-
-  </div>
-
-  <div>
-
-  ##### Социальные сети
-  [Facebook](/)
-  [Telegram](/)
-  [Whatsup](/)
-  [Viber](/)
-
-  </div>
-
-</div>
+[Telegram](#)
