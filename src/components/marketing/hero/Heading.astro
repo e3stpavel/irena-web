@@ -1,6 +1,7 @@
 ---
 import { getEntry } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
+import { getCTALink } from '~/data/get-cta-link'
 
 import Button from '~/components/common/Button.astro'
 
@@ -23,10 +24,11 @@ const t = useTranslations({
 })
 
 const heading = t.heading.split(' ')
+const ctaLink = await getCTALink(locale)
 
 ---
 
-<div class="mx-auto max-w-2xl lg:pt-8">
+<div class="mx-auto max-w-2xl lg:pt-24">
   <h1 class="max-w-min text-4xl font-bold tracking-tight capitalize sm:text-6xl">
     { heading.slice(0, -1).join(' ') }
     <span class="inline-flex gap-1">
@@ -40,7 +42,7 @@ const heading = t.heading.split(' ')
   <div class="mt-10">
     <Button
       as="a"
-      href="/"
+      href={ctaLink}
       hreflang={locale}
       label={t.cta}
       variant="primary"

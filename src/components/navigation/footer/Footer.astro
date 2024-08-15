@@ -11,10 +11,7 @@ import { getLinkToPage } from '~/data/get-link-to-page'
 
 import IrenaLogo from '~/assets/brand/wordmark.svg'
 import IconFacebook from '~icons/bxl/facebook-circle'
-import IconMessenger from '~icons/bxl/messenger'
-import IconWhatsapp from '~icons/bxl/whatsapp'
-import IconTelegram from '~icons/bxl/telegram'
-
+import IconInstagram from '~icons/bxl/instagram-alt'
 // import IconGithub from '~icons/bxl/github'
 
 
@@ -53,27 +50,15 @@ const privacyLink = await getLinkToPage(locale, 'privacy')
         <div class="flex gap-6">
           <IconButton
             as="a"
-            href="/"
+            href="#"
             label="Facebook"
             icon={IconFacebook}
           />
           <IconButton
             as="a"
-            href="/"
-            label="Messenger"
-            icon={IconMessenger}
-          />
-          <IconButton
-            as="a"
-            href="/"
-            label="Whatsapp"
-            icon={IconWhatsapp}
-          />
-          <IconButton
-            as="a"
-            href="/"
-            label="Telegram"
-            icon={IconTelegram}
+            href="#"
+            label="Instagram"
+            icon={IconInstagram}
           />
           {/* <IconButton
             as="a"
@@ -103,7 +88,7 @@ const privacyLink = await getLinkToPage(locale, 'privacy')
               </FooterItem>
             </li>
             <li>
-              <FooterItem as="a" href={privacyLink}>
+              <FooterItem as="a" href={privacyLink} rel="privacy-policy">
                 { t.privacyPolicy }
               </FooterItem>
             </li>
@@ -125,6 +110,7 @@ const privacyLink = await getLinkToPage(locale, 'privacy')
             <a
               href={privacyLink}
               hreflang={locale}
+              rel="privacy-policy"
               class="text-zinc-700 underline underline-offset-3 hover:(text-zinc-900 no-underline)"
             >
               { t.privacyPolicy }

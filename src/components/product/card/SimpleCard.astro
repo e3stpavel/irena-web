@@ -1,0 +1,31 @@
+---
+import { Image } from 'astro:assets'
+import { type CollectionEntry, getCollection } from 'astro:content'
+import { getRelativeLocaleUrl } from 'astro:i18n'
+
+interface Props {
+  productDetails: CollectionEntry<'product-details'>
+}
+
+const locale = Astro.currentLocale!
+
+const { productDetails } = Astro.props
+
+const result = await getCollection('products', ({ id, data }) =>
+  data.details.id === productDetails.id && id.startsWith(`${locale}/`))
+
+const product = result.at(0)
+
+if (product === undefined) {
+  throw new Error(`Could not find associated product for '${productDetails.id}'`)
+}
+
+---
+
+<div class="group relative aspect-square overflow-hidden rounded-xl bg-zinc-100 hover:opacity-75 focus-within:(ring ring-offset-3 ring-indigo-600)">
+  <Image src={productDetails.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" />
+  <a href={getRelativeLocaleUrl(locale, product.id.slice(2))} hreflang={locale}>
+    <span class="sr-only">Go to { product.data.name } page</span>
+    <span class="absolute inset-0" />
+  </a>
+</div>

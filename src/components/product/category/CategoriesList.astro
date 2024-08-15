@@ -14,7 +14,7 @@ const categories = await getCollection('categories', ({ id, data }) =>
 
 ---
 
-<ul role="list" class="font-medium space-y-4">
+<ul role="list" class="font-medium space-y-6">
   {categories.map(category => (
     <li>
       <CategoryItem
