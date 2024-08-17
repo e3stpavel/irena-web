@@ -92,13 +92,11 @@ const altPages = (
 </HomeLayout>
 
 <script>
-(() => {
-  const span = document.getElementById('email-placeholder')
+import { DEFAULT_EMAIL } from '~/utils/email'
 
-  if (span === null) {
-    return
-  }
+const span = document.getElementById('email-placeholder')
 
-  span.innerHTML = '<' + 'a' + ' ' + 'h' + 'r' + 'e' + 'f' + '=' + '\'' + '&' + '#' + '1' + '0' + '9' + ';' + 'a' + 'i' + '&' + '#' + '1' + '0' + '8' + ';' + 't' + '&' + '#' + '1' + '1' + '1' + ';' + '&' + '#' + '5' + '8' + ';' + 'i' + '&' + '#' + '3' + '7' + ';' + '&' + '#' + '5' + '4' + ';' + 'E' + 'f' + '&' + '#' + '1' + '1' + '1' + ';' + '&' + '#' + '6' + '4' + ';' + 'i' + '%' + '7' + '&' + '#' + '5' + '0' + ';' + '&' + '#' + '1' + '0' + '1' + ';' + '%' + '6' + 'E' + '%' + '6' + '1' + '&' + '#' + '4' + '6' + ';' + 'e' + 'e' + '\'' + '>' + 'i' + 'n' + 'f' + 'o' + '&' + '#' + '6' + '4' + ';' + 'i' + 'r' + '&' + '#' + '1' + '0' + '1' + ';' + '&' + '#' + '1' + '1' + '0' + ';' + 'a' + '&' + '#' + '4' + '6' + ';' + 'e' + 'e' + '<' + '/' + 'a' + '>'
-})()
+if (span !== null) {
+  span.innerHTML = DEFAULT_EMAIL
+}
 </script>

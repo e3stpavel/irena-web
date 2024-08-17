@@ -35,7 +35,7 @@ export const GET: APIRoute = async () => {
   <loc>${getAbsoluteLocaleUrl(page.id.slice(0, 2), page.id.slice(2))}</loc>
   ${altLinks.map(({ href, hrefLang }) =>
     `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-  }
+}
 </url>
       `.trim()
     }),
@@ -45,15 +45,15 @@ export const GET: APIRoute = async () => {
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
 ${locales.map(locale =>
-  `
+    `
 <url>
   <loc>${getAbsoluteLocaleUrl(locale)}</loc>
-  ${getAltLinks(locales.map(locale => `${locale}/`)).map(({ href, hrefLang }) =>
+  ${getAltLinks(locales.map(locale => `${locale}/`), true).map(({ href, hrefLang }) =>
     `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-  }
+}
 </url>
   `.trim(),
-).join('\n')}
+  ).join('\n')}
 ${urls.join('\n')}
 </urlset>
   `.trim()

@@ -101,7 +101,14 @@ const privacyLink = await getLinkToPage(locale, 'privacy')
         <div>
           <p class="md:text-end">
             { t.issue }
-            <a href="/" class="text-zinc-700 underline underline-offset-3 hover:(text-zinc-900 no-underline)">{ t.issueAction }</a>
+            <a
+              href="https://github.com/e3stpavel/irena-web/issues"
+              target="_blank"
+              rel="noopener"
+              class="text-zinc-700 underline underline-offset-3 hover:(text-zinc-900 no-underline)"
+            >
+              { t.issueAction }
+            </a>
           </p>
         </div>
         <div>

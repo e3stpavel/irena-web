@@ -10,6 +10,4 @@ canonicalId: contacts
 
 <a href="https://www.facebook.com/share/voKFtr7EnnxvHERX/" target="_blank" rel="noopener">Facebook</a>
 
-[Whatsapp](#)
-
-[Telegram](#)
+<a href="https://wa.link/jfug68" target="_blank" rel="noopener">WhatsApp</a>

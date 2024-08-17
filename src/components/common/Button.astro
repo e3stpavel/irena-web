@@ -35,6 +35,8 @@ type Props<Tag extends HTMLTag = HTMLTag> = Polymorphic<{
   }
 }>
 
+// TODO: fix this
+// @ts-expect-error probably because of `icon` object property
 const { as: Tag = 'button', label, icon, variant, size, ...attrs } = Astro.props
 const { component: Icon, position = 'trailing' } = icon ?? {}
 

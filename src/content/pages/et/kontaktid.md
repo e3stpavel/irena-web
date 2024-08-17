@@ -10,6 +10,4 @@ Mini-kondiitriäri "Irena" pakub omatehtud kondiitritooteid Lääne-Harju vallas
 
 <a href="https://www.facebook.com/share/voKFtr7EnnxvHERX/" target="_blank" rel="noopener">Facebook</a>
 
-[Whatsapp](#)
-
-[Telegram](#)
+<a href="https://wa.link/sj6i9m" target="_blank" rel="noopener">WhatsApp</a>
