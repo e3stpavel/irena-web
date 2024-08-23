@@ -2,10 +2,10 @@
 title: Andmekaitsetingimused
 canonicalId: privacy
 description: Mini-kondiitriäri "Irena" privaatsuspoliitika
-updatedAt: 2024-06-08
+updatedAt: 2024-08-22
 ---
 
-**Irena** ("meie", "meid" või "meie") haldab [veebisaidi URL] (edaspidi "Veebileht").
+**Irena** ("meie", "meid" või "meie") haldab irena.ee (edaspidi "Veebileht").
 
 ### Informatsiooni kogumine ja kasutamine
 
