@@ -18,7 +18,7 @@ export const Pagination: Component<Props> = props => (
   >
     <ul class="flex items-center justify-center gap-4">
       <li>
-        <Trigger variant="previous" url={`${removeDoubleSlashes(props.url.prev)}/`} />
+        <Trigger variant="previous" url={removeDoubleSlashes(props.url.prev)} />
       </li>
       <ArkPagination.Context>
         {api => (
@@ -57,7 +57,7 @@ export const Pagination: Component<Props> = props => (
         </p>
       </li>
       <li>
-        <Trigger variant="next" url={`${removeDoubleSlashes(props.url.next)}/`} />
+        <Trigger variant="next" url={removeDoubleSlashes(props.url.next)} />
       </li>
     </ul>
   </ArkPagination.Root>
