@@ -1,5 +1,5 @@
-price: 20
-unit: kg
+price: 4
+unit: pc
 
-thumbnail: ~/assets/products/fallback.png
+thumbnail: ~/assets/products/deserts/cherry-shortcake.jpg
 images: []

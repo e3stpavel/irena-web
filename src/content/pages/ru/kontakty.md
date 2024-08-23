@@ -8,6 +8,6 @@ canonicalId: contacts
 
 <br />
 
-<a href="https://www.facebook.com/share/voKFtr7EnnxvHERX/" target="_blank" rel="noopener">Facebook</a>
+<a href="https://www.facebook.com/irena.cooking/" target="_blank" rel="noopener">Facebook</a>
 
 <a href="https://wa.link/jfug68" target="_blank" rel="noopener">WhatsApp</a>
