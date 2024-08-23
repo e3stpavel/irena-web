@@ -1,5 +1,5 @@
-price: 20
-unit: kg
+price: 3
+unit: pc
 
-thumbnail: ~/assets/products/fallback.png
+thumbnail: ~/assets/products/deserts/honey-cake.jpg
 images: []

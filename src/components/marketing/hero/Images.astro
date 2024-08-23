@@ -4,11 +4,9 @@ import SimpleCard from '~/components/product/card/SimpleCard.astro'
 
 const products = await Promise.all([
   getEntry('product-details', 'pretzels/sweet/with-cream-and-raisins'),
-  getEntry('product-details', 'cookies/cracked-orange-almond'),
-  getEntry('product-details', 'pretzels/salty/with-ham-and-cheese'),
+  getEntry('product-details', 'deserts/brownie'),
+  getEntry('product-details', 'cakes/marshmallow'),
   getEntry('product-details', 'rolls/snickers'),
-  // getEntry('product-details', 'deserts/brownie'),
-  // getEntry('product-details', 'deserts/pavlova'),
 ])
 
 ---
