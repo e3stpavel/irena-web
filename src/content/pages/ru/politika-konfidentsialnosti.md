@@ -3,6 +3,8 @@ title: Политика конфиденциальности
 canonicalId: privacy
 description: Политика конфиденциальности мини-кондитерской "Irena"
 updatedAt: 2024-08-22
+content:
+  lastUpdate: Последнее обновление
 ---
 
 **Irena** («мы», «нас» или «наш») управляет irena.ee (далее «Сайт»).

@@ -1,0 +1,69 @@
+---
+import { getCollection } from 'astro:content'
+import { useTranslations } from 'astro-nanointl'
+import type { GetStaticPaths } from 'astro'
+import Container from '~/components/common/Container.html'
+import Head from '~/components/common/Head.astro'
+import { LocaleSwitcher } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale } from '~/utils/i18n'
+
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages', ({ data: { canonicalId } }) =>
+    canonicalId === 'works')
+
+  return pages.map((page) => {
+    const [locale, slug] = page.slug.split('/')
+
+    return {
+      params: {
+        locale: isDefaultLocale(locale) ? undefined : locale,
+        works: slug,
+      },
+      props: { page },
+    }
+  })
+}) satisfies GetStaticPaths
+
+const locale = Astro.currentLocale!
+const { page } = Astro.props
+
+const t = useTranslations({
+  heading: 'Our works',
+  paragraph: 'Check out our previous works to find inspiration and order something delicious from us',
+}, {
+  locale,
+  data: page.data.content,
+})
+
+const altPages = (
+  await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId)
+).map(page => page.slug)
+
+---
+
+<HomeLayout>
+  <Head
+    slot="head"
+    title={page.data.title}
+    description={page.data.description}
+    languageAlternates={altPages}
+  />
+  <LocaleSwitcher
+    slot="locale-switcher"
+    links={altPages}
+  />
+  <Container>
+    <div class="py-16 sm:py-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none space-y-6">
+        <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ t.heading }</h1>
+        <p class="text-zinc-700 leading-7">{ t.paragraph }</p>
+        <hr />
+        <div>
+          <!-- <ImagesGallery client:load /> -->
+        </div>
+      </div>
+    </div>
+  </Container>
+</HomeLayout>

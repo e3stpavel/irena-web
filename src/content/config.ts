@@ -38,6 +38,7 @@ const pages = defineCollection({
     canonicalId: z.string(),
     description: z.string(),
     updatedAt: z.date().optional(),
+    content: translationsSchema.optional(),
   }),
 })
 
