@@ -11,26 +11,28 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@ark-ui/solid": "^3.7.0",
-    "@astrojs/check": "^0.9.2",
-    "@astrojs/solid-js": "^4.4.1",
-    "astro": "^4.14.2",
+    "@ark-ui/solid": "^3.12.1",
+    "@astrojs/check": "^0.9.3",
+    "@astrojs/solid-js": "^4.4.2",
+    "astro": "^4.15.8",
     "astro-seo": "^0.8.4",
     "sharp": "^0.33.5",
-    "solid-js": "^1.8.21",
-    "typescript": "^5.5.4"
+    "solid-js": "^1.8.22",
+    "typescript": "^5.6.2"
   },
   "devDependencies": {
-    "@antfu/eslint-config": "^2.26.0",
-    "@iconify-json/bxl": "^1.1.11",
-    "@iconify-json/material-symbols": "^1.1.88",
-    "@unocss/eslint-plugin": "^0.62.2",
-    "@unocss/reset": "^0.62.2",
+    "@antfu/eslint-config": "^3.7.1",
+    "@iconify-json/bxl": "^1.2.0",
+    "@iconify-json/material-symbols": "^1.2.1",
+    "@solid-primitives/media": "^2.2.9",
+    "@unocss/eslint-plugin": "^0.62.4",
+    "@unocss/reset": "^0.62.4",
     "astro-nanointl": "^1.0.0",
-    "eslint": "^9.9.0",
-    "eslint-plugin-astro": "^1.2.3",
+    "eslint": "^9.11.0",
+    "eslint-plugin-astro": "^1.2.4",
     "eslint-plugin-format": "^0.1.2",
-    "unocss": "^0.62.2",
-    "unplugin-icons": "^0.19.2"
+    "unocss": "^0.62.4",
+    "unplugin-icons": "^0.19.3",
+    "virtua": "^0.34.2"
   }
 }
