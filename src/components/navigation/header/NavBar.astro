@@ -1,20 +1,20 @@
 ---
+import IconChevronRight from '~icons/material-symbols/chevron-right-rounded'
+import IconClose from '~icons/material-symbols/close-rounded'
+import IconMenu from '~icons/material-symbols/menu-rounded'
 import { Image } from 'astro:assets'
 import { getRelativeLocaleUrl } from 'astro:i18n'
-import NavItem from './NavBarItem.astro'
-import { NavItemDropdown } from './NavItemDropdown.tsx'
-import { NavMenu } from './NavMenu.tsx'
-import IconButton from '~/components/common/IconButton.astro'
+import IrenaLogo from '~/assets/brand/wordmark.svg'
 import Button from '~/components/common/Button.astro'
 
-import { getNavigationTranslations } from '~/data/get-navigation-translations'
+import IconButton from '~/components/common/IconButton.astro'
 import { getCategoryLinks } from '~/data/get-category-links'
 import { getLinkToPage } from '~/data/get-link-to-page'
 
-import IrenaLogo from '~/assets/brand/wordmark.svg'
-import IconMenu from '~icons/material-symbols/menu-rounded'
-import IconClose from '~icons/material-symbols/close-rounded'
-import IconChevronRight from '~icons/material-symbols/chevron-right-rounded'
+import { getNavigationTranslations } from '~/data/get-navigation-translations'
+import NavItem from './NavBarItem.astro'
+import { NavItemDropdown } from './NavItemDropdown.tsx'
+import { NavMenu } from './NavMenu.tsx'
 
 
 const locale = Astro.currentLocale!
@@ -22,6 +22,7 @@ const t = await getNavigationTranslations(locale)
 
 const categoryLinks = await getCategoryLinks(locale)
 const contactsLink = await getLinkToPage(locale, 'contacts')
+const worksLink = await getLinkToPage(locale, 'works')
 
 ---
 
@@ -70,6 +71,11 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
             </ul>
           </div>
           <div class="flex">
+            <NavItem as="a" href={worksLink}>
+              { t.works }
+            </NavItem>
+          </div>
+          <div class="flex">
             <NavItem as="a" href={contactsLink}>
               { t.contacts }
             </NavItem>
@@ -87,6 +93,7 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
       <NavItemDropdown items={categoryLinks} client:visible>
         <NavItem as="span">{ t.products }</NavItem>
       </NavItemDropdown>
+      <NavItem as="a" href={worksLink}>{ t.works }</NavItem>
       <NavItem as="a" href={contactsLink}>{ t.contacts }</NavItem>
     </div>
     <div class="flex-1">

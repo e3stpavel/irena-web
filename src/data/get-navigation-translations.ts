@@ -8,6 +8,7 @@ export async function getNavigationTranslations(locale: string) {
     products: 'Products',
     contacts: 'Contacts',
     aboutUs: 'About us',
+    works: 'Works',
     privacyPolicy: 'Privacy policy',
   }, {
     locale,
