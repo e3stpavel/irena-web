@@ -1,7 +1,6 @@
-import { defineConfig } from 'astro/config'
-
-import unocss from 'unocss/astro'
 import solid from '@astrojs/solid-js'
+import { defineConfig } from 'astro/config'
+import unocss from 'unocss/astro'
 import icons from 'unplugin-icons/vite'
 import { locales } from './i18n.config'
 

@@ -1,10 +1,11 @@
 ---
+import type { GetStaticPaths } from 'astro'
 import { getCollection } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
-import type { GetStaticPaths } from 'astro'
 import Container from '~/components/common/Container.html'
 import Head from '~/components/common/Head.astro'
 import { LocaleSwitcher } from '~/components/navigation'
+import { ProductsList } from '~/components/product/ProductsList'
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import { isDefaultLocale } from '~/utils/i18n'
 
@@ -61,7 +62,7 @@ const altPages = (
         <p class="text-zinc-700 leading-7">{ t.paragraph }</p>
         <hr />
         <div>
-          <!-- <ImagesGallery client:load /> -->
+          <ProductsList client:only="solid" />
         </div>
       </div>
     </div>
