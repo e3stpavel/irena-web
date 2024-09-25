@@ -35,4 +35,4 @@ Me võime aeg-ajalt oma privaatsuspoliitikat uuendada. Teavitame teid kõigist m
 
 ### Võtke meiega ühendust
 
-Kui teil on küsimusi selle privaatsuspoliitika kohta, võtke meiega ühendust aadressil <span id="email-placeholder">[ Please enable JavaScript! ]</span>.
+Kui teil on küsimusi selle privaatsuspoliitika kohta, võtke meiega ühendust aadressil <span id="email-placeholder">[ Palun lubage JavaScript! ]</span>.
