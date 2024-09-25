@@ -1,0 +1,78 @@
+---
+import type { GetStaticPaths } from 'astro'
+import { getCollection } from 'astro:content'
+import Container from '~/components/common/Container.html'
+import Head from '~/components/common/Head.astro'
+import { BrandPattern } from '~/components/marketing'
+import { LocaleSwitcher } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale } from '~/utils/i18n'
+
+
+export const getStaticPaths = (async () => {
+  const pages = await getCollection('pages', ({ data: { canonicalId } }) =>
+    canonicalId === 'contacts')
+
+  return pages.map((page) => {
+    const [locale, slug] = page.slug.split('/')
+
+    return {
+      params: {
+        locale: isDefaultLocale(locale) ? undefined : locale,
+        contacts: slug,
+      },
+      props: { page },
+    }
+  })
+}) satisfies GetStaticPaths
+
+
+const { page } = Astro.props
+const { Content } = await page.render()
+
+const altPages = (
+  await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId)
+).map(page => page.slug)
+
+---
+
+<HomeLayout>
+  <Head
+    slot="head"
+    title={page.data.title}
+    description={page.data.description}
+    languageAlternates={altPages}
+  />
+  <LocaleSwitcher
+    slot="locale-switcher"
+    links={altPages}
+  />
+  <div class="relative z-0 bg-indigo-700 text-white">
+    <BrandPattern />
+    <Container>
+      <div class="pb-12 pt-16 lg:pt-24">
+        <div class="mx-auto max-w-2xl lg:max-w-none">
+          <h1 class="text-3xl font-bold tracking-tight hyphens-auto sm:text-4xl">{ page.data.title }</h1>
+          <p class="mt-6 text-indigo-100 leading-7">
+            {page.data.description}
+          </p>
+        </div>
+      </div>
+    </Container>
+  </div>
+  <Container>
+    <div class="pb-16 pt-12 lg:pb-24">
+      <div class="mx-auto max-w-2xl lg:max-w-none">
+        <div class="underline-offset-5 prose prose-zinc">
+          <Content />
+        </div>
+      </div>
+    </div>
+  </Container>
+</HomeLayout>
+
+<script>
+import { insertEmail } from '~/utils/email'
+
+insertEmail('#email-placeholder', 'default')
+</script>

@@ -1,13 +1,13 @@
 ---
+import IconArrowRight from '~icons/material-symbols/chevron-right-rounded'
 import { getCollection, getEntry } from 'astro:content'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { useTranslations } from 'astro-nanointl'
-import { shuffle } from '~/utils/shuffle'
 
-import ProductCard from '~/components/product/card/ProductCard.astro'
 import Link from '~/components/common/Link.astro'
+import ProductCard from '~/components/product/card/ProductCard.astro'
 
-import IconArrowRight from '~icons/material-symbols/chevron-right-rounded'
+import { shuffle } from '~/utils/shuffle'
 
 interface Props {
   categoryId: string

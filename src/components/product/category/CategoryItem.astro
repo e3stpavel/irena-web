@@ -1,13 +1,13 @@
 ---
-import { useTranslations } from 'astro-nanointl'
+import IconDown from '~icons/material-symbols/keyboard-arrow-down-rounded'
 import { getEntry } from 'astro:content'
 import { type CollectionEntry, getCollection } from 'astro:content'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 
+import { useTranslations } from 'astro-nanointl'
 // import IconPlus from '~icons/material-symbols/add-rounded'
 // import IconMinus from '~icons/material-symbols/remove-rounded'
 import IconUp from '~icons/material-symbols/keyboard-arrow-up-rounded'
-import IconDown from '~icons/material-symbols/keyboard-arrow-down-rounded'
 
 interface Props {
   category: CollectionEntry<'categories'>

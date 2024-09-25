@@ -9,3 +9,9 @@ contactCta: kasutades meie kontakte
 
 orderTitle: Tehke tellimus
 orderDescription: Arutage kõiki oma tellimuse nüansse alates kaalust kuni toote disainini
+
+note: Pange tähele!
+noteMessage: Palun tehke oma tellimus vähemalt %1 enne soovitud toodete kättesaamise kuupäeva.
+days:
+  one: '{count} päev'
+  many: '{count} päeva'

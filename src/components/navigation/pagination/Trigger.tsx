@@ -1,9 +1,9 @@
 import type { Component, JSX } from 'solid-js'
-import { Dynamic, Match, Switch } from 'solid-js/web'
 import { PaginationNextTrigger, PaginationPrevTrigger } from '@ark-ui/solid'
+import IconPrevious from '~icons/material-symbols/arrow-left-alt-rounded'
 
 import IconNext from '~icons/material-symbols/arrow-right-alt-rounded'
-import IconPrevious from '~icons/material-symbols/arrow-left-alt-rounded'
+import { Dynamic, Match, Switch } from 'solid-js/web'
 
 interface Props {
   variant: 'next' | 'previous'

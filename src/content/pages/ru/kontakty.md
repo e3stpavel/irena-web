@@ -11,3 +11,5 @@ canonicalId: contacts
 <a href="https://www.facebook.com/irena.cooking/" target="_blank" rel="noopener">Facebook</a>
 
 <a href="https://wa.link/jfug68" target="_blank" rel="noopener">WhatsApp</a>
+
+<span id="email-placeholder">[ Пожалуйста, разрешите использование JavaScript! ]</span>

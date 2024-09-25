@@ -9,4 +9,8 @@ export default antfu({
   // solid: true,
   unocss: true,
   lessOpinionated: true,
+}, {
+  rules: {
+    'antfu/no-top-level-await': 'off',
+  },
 })

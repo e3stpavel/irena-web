@@ -15,6 +15,7 @@ export const GET: APIRoute = async () => {
   const urls = await Promise.all(
     pages.map(async (page) => {
       let altPages
+      let pageId: string = page.id
       switch (page.collection) {
         case 'products':
           altPages = await getCollection('products', ({ data }) => data.details.id === page.data.details.id)
@@ -27,15 +28,17 @@ export const GET: APIRoute = async () => {
         case 'pages':
           altPages = (await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId))
             .map(entry => ({ id: entry.slug, data: entry.data, collection: entry.collection }))
+          pageId = page.slug
+          break
       }
 
       const altLinks = getAltLinks(altPages.map(page => page.id), true)
       return `
 <url>
-  <loc>${getAbsoluteLocaleUrl(page.id.slice(0, 2), page.id.slice(2))}</loc>
+  <loc>${getAbsoluteLocaleUrl(pageId.slice(0, 2), pageId.slice(2))}</loc>
   ${altLinks.map(({ href, hrefLang }) =>
-    `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-}
+      `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
+  }
 </url>
       `.trim()
     }),
@@ -49,16 +52,14 @@ ${locales.map(locale =>
 <url>
   <loc>${getAbsoluteLocaleUrl(locale)}</loc>
   ${getAltLinks(locales.map(locale => `${locale}/`), true).map(({ href, hrefLang }) =>
-    `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-}
+      `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
+  }
 </url>
   `.trim(),
   ).join('\n')}
 ${urls.join('\n')}
 </urlset>
-  `.trim()
-    .replace(/>\s*/g, '>')
-    .replace(/\s*</g, '<')
+  `.trim().replace(/>\s*/g, '>').replace(/\s*</g, '<')
 
   return new Response(result, {
     headers: {

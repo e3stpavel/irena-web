@@ -1,11 +1,11 @@
 ---
 import type { GetStaticPaths } from 'astro'
 import { useTranslations } from 'astro-nanointl'
-import { isDefaultLocale, locales } from '~/utils/i18n'
-
-import HomeLayout from '~/layouts/HomeLayout.astro'
-import { CategoriesSection, CtaSection, HeroSection } from '~/components/marketing'
 import Head from '~/components/common/Head.astro'
+
+import { CategoriesSection, CtaSection, HeroSection } from '~/components/marketing'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale, locales } from '~/utils/i18n'
 
 
 export const getStaticPaths = (() => {

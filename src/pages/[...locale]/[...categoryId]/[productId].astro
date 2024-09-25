@@ -1,16 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro'
+import { getImage, Image } from 'astro:assets'
 import { getCollection, getEntry } from 'astro:content'
-import { Image, getImage } from 'astro:assets'
 import { format, useTranslations } from 'astro-nanointl'
 import { params } from 'astro-nanointl/transformers'
-import { isDefaultLocale } from '~/utils/i18n'
-
-import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
+
 import Head from '~/components/common/Head.astro'
 import { OrderSection } from '~/components/marketing'
 import { Breadcrumbs, LocaleSwitcher } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale } from '~/utils/i18n'
 
 
 export const getStaticPaths = (async () => {
@@ -53,8 +53,9 @@ const t = useTranslations({
   information: 'Product information',
   composition: 'Composition',
   notes: 'Notes',
+  description: 'Discover this and even more homemade confectionery products from the mini-patisserie "Irena"',
 
-  ogProductTitle: params('{productName}: review, price and how to order. Discover homemade confectionery products from the mini-patisserie "Irena"'),
+  ogProductTitle: params('Buy {productName}: review, composition, price and how to order. Discover homemade confectionery products from the mini-patisserie "Irena"'),
   ogImageAlt: params('A picture with an image of a product from the \'{categoryName}\' category, the name of this category and the logo of the mini-patisserie "Irena"'),
 }, {
   locale,
@@ -77,7 +78,7 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
   <Head
     slot="head"
     title={product.data.name}
-    description="TODO:"
+    description={t.description}
     languageAlternates={altProducts}
     openGraph={{
       basic: {
@@ -105,10 +106,10 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
         <div class="mt-4 flex flex-col items-start gap-12 lg:flex-row">
           <div class="w-full lg:w-xl">
             <div class="aspect-square overflow-hidden rounded-xl bg-zinc-200">
-              <Image src={details.data.thumbnail} alt={product.data.name} class="object-fit size-full object-cover" loading="eager" />
+              <Image src={details.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" loading="eager" />
             </div>
           </div>
-          <div class="flex-1">
+          <div class="w-full flex-1">
             <div class="lg:w-md">
               <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{ product.data.name }</h1>
               <div class="mt-4">

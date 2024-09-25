@@ -1,43 +1,48 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { getCollection, getEntry } from 'astro:content'
+import { getCollection } from 'astro:content'
 import { format, useTranslations } from 'astro-nanointl'
-import { isDefaultLocale } from '~/utils/i18n'
-
-import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
 import Head from '~/components/common/Head.astro'
 import { BrandPattern } from '~/components/marketing'
 import { LocaleSwitcher } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale } from '~/utils/i18n'
 
 
 export const getStaticPaths = (async () => {
-  const pages = await getCollection('pages')
+  const pages = await getCollection('pages', ({ data: { canonicalId } }) =>
+    canonicalId === 'privacy')
 
   return pages.map((page) => {
     const [locale, slug] = page.slug.split('/')
+
     return {
       params: {
         locale: isDefaultLocale(locale) ? undefined : locale,
-        slug,
+        privacy: slug,
       },
       props: { page },
     }
   })
 }) satisfies GetStaticPaths
 
+
 const locale = Astro.currentLocale!
 
 const { page } = Astro.props
 const { Content } = await page.render()
 
-const translations = await getEntry('translations', `${locale}/components/marketing/legal`)
 const t = useTranslations({
   lastUpdate: 'Last updated',
 }, {
   locale,
-  data: translations?.data,
+  data: page.data.content,
 })
+
+if (page.data.updatedAt === undefined) {
+  throw new Error('Privacy policy page must have last modified date')
+}
 
 const altPages = (
   await getCollection('pages', ({ data }) => data.canonicalId === page.data.canonicalId)
@@ -63,18 +68,12 @@ const altPages = (
         <div class="mx-auto max-w-2xl lg:max-w-none">
           <h1 class="text-3xl font-bold tracking-tight hyphens-auto sm:text-4xl">{ page.data.title }</h1>
           <p class="mt-6 text-indigo-100 leading-7">
-            {page.data.updatedAt
-              ? (
-                  <>
-                    { t.lastUpdate }
-                    <time datetime={page.data.updatedAt.toISOString()}>
-                      {format(locale).date(page.data.updatedAt, {
-                        dateStyle: 'short',
-                      })}
-                    </time>
-                  </>
-                )
-              : page.data.description}
+            { t.lastUpdate }
+            <time datetime={page.data.updatedAt.toISOString()}>
+              {format(locale).date(page.data.updatedAt, {
+                dateStyle: 'short',
+              })}
+            </time>
           </p>
         </div>
       </div>
@@ -92,11 +91,7 @@ const altPages = (
 </HomeLayout>
 
 <script>
-import { DEFAULT_EMAIL } from '~/utils/email'
+import { insertEmail } from '~/utils/email'
 
-const span = document.getElementById('email-placeholder')
-
-if (span !== null) {
-  span.innerHTML = DEFAULT_EMAIL
-}
+insertEmail('#email-placeholder', 'default')
 </script>

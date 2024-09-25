@@ -1,15 +1,15 @@
 ---
+import IconArrowRight from '~icons/material-symbols/arrow-right-alt-rounded'
 import { getEntry } from 'astro:content'
-import { useTranslations } from 'astro-nanointl'
 
-import BrandPattern from './BrandPattern.astro'
+import { useTranslations } from 'astro-nanointl'
+import Button from '~/components/common/Button.astro'
 import Container from '~/components/common/Container.html'
 import Section from '~/components/common/Section.html'
 import Wrapper from '~/components/common/Wrapper.astro'
-import Button from '~/components/common/Button.astro'
 import { getCTALink } from '~/data/get-cta-link'
 
-import IconArrowRight from '~icons/material-symbols/arrow-right-alt-rounded'
+import BrandPattern from './BrandPattern.astro'
 
 
 const locale = Astro.currentLocale!
