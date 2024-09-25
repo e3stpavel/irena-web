@@ -105,7 +105,7 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
         <div class="mt-4 flex flex-col items-start gap-12 lg:flex-row">
           <div class="w-full lg:w-xl">
             <div class="aspect-square overflow-hidden rounded-xl bg-zinc-200">
-              <Image src={details.data.thumbnail} alt={product.data.name} class="object-fit size-full object-cover" loading="eager" />
+              <Image src={details.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" loading="eager" />
             </div>
           </div>
           <div class="flex-1">
