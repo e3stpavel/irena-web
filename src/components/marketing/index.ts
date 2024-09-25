@@ -1,5 +1,5 @@
-export * from './hero'
+export { default as BrandPattern } from './BrandPattern.astro'
 export { default as CategoriesSection } from './CategoriesSection.astro'
 export { default as CtaSection } from './CTASection.astro'
+export * from './hero'
 export { default as OrderSection } from './OrderSection.astro'
-export { default as BrandPattern } from './BrandPattern.astro'

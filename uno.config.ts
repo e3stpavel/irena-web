@@ -1,14 +1,14 @@
+import type { Theme } from 'unocss/preset-uno'
+
 import {
   defineConfig,
   transformerDirectives,
   transformerVariantGroup,
 } from 'unocss'
-
-import uno from 'unocss/preset-uno'
 import icons from 'unocss/preset-icons'
 import typography from 'unocss/preset-typography'
 
-import type { Theme } from 'unocss/preset-uno'
+import uno from 'unocss/preset-uno'
 
 export default defineConfig<Theme>({
   presets: [

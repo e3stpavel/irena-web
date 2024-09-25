@@ -1,16 +1,16 @@
 ---
 import type { GetStaticPaths } from 'astro'
+import { getImage, Image } from 'astro:assets'
 import { getCollection, getEntry } from 'astro:content'
-import { Image, getImage } from 'astro:assets'
 import { format, useTranslations } from 'astro-nanointl'
 import { params } from 'astro-nanointl/transformers'
-import { isDefaultLocale } from '~/utils/i18n'
-
-import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
+
 import Head from '~/components/common/Head.astro'
 import { OrderSection } from '~/components/marketing'
 import { Breadcrumbs, LocaleSwitcher } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
+import { isDefaultLocale } from '~/utils/i18n'
 
 
 export const getStaticPaths = (async () => {

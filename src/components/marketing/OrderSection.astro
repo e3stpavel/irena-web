@@ -1,14 +1,14 @@
 ---
-import { getEntry } from 'astro:content'
-import { useTranslations } from 'astro-nanointl'
-import { args } from 'astro-nanointl/transformers'
-import { getLinkToPage } from '~/data/get-link-to-page'
-
-import Container from '~/components/common/Container.html'
-
 import IconSearch from '~icons/material-symbols/category-search-rounded'
 import IconContact from '~icons/material-symbols/mark-chat-unread-rounded'
 import IconOrder from '~icons/material-symbols/order-approve-rounded'
+import { getEntry } from 'astro:content'
+
+import { useTranslations } from 'astro-nanointl'
+
+import { args } from 'astro-nanointl/transformers'
+import Container from '~/components/common/Container.html'
+import { getLinkToPage } from '~/data/get-link-to-page'
 
 const locale = Astro.currentLocale!
 

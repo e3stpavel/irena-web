@@ -34,8 +34,8 @@ export const GET: APIRoute = async () => {
 <url>
   <loc>${getAbsoluteLocaleUrl(page.id.slice(0, 2), page.id.slice(2))}</loc>
   ${altLinks.map(({ href, hrefLang }) =>
-    `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-}
+      `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
+  }
 </url>
       `.trim()
     }),
@@ -49,16 +49,14 @@ ${locales.map(locale =>
 <url>
   <loc>${getAbsoluteLocaleUrl(locale)}</loc>
   ${getAltLinks(locales.map(locale => `${locale}/`), true).map(({ href, hrefLang }) =>
-    `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
-}
+      `<xhtml:link rel="alternate" hreflang="${hrefLang}" href="${href}"/>`).join('\n')
+  }
 </url>
   `.trim(),
   ).join('\n')}
 ${urls.join('\n')}
 </urlset>
-  `.trim()
-    .replace(/>\s*/g, '>')
-    .replace(/\s*</g, '<')
+  `.trim().replace(/>\s*/g, '>').replace(/\s*</g, '<')
 
   return new Response(result, {
     headers: {

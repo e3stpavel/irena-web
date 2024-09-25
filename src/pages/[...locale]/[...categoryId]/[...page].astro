@@ -1,23 +1,23 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { type CollectionEntry, getCollection, getEntry } from 'astro:content'
+import IconArrowDown from '~icons/material-symbols/arrow-drop-down-rounded'
+import IconClose from '~icons/material-symbols/close-rounded'
 import { getImage } from 'astro:assets'
+import { type CollectionEntry, getCollection, getEntry } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
 import { params } from 'astro-nanointl/transformers'
-import { isDefaultLocale } from '~/utils/i18n'
-import { removeDoubleSlashes } from '~/utils/url'
 
-import HomeLayout from '~/layouts/HomeLayout.astro'
 import Container from '~/components/common/Container.html'
 import Head from '~/components/common/Head.astro'
+import IconButton from '~/components/common/IconButton.astro'
+import { LocaleSwitcher, Pagination } from '~/components/navigation'
 import ProductCard from '~/components/product/card/ProductCard.astro'
 import CategoriesList from '~/components/product/category/CategoriesList.astro'
 import { CategoriesMenu } from '~/components/product/category/CategoriesMenu.tsx'
-import IconButton from '~/components/common/IconButton.astro'
-import { LocaleSwitcher, Pagination } from '~/components/navigation'
+import HomeLayout from '~/layouts/HomeLayout.astro'
 
-import IconArrowDown from '~icons/material-symbols/arrow-drop-down-rounded'
-import IconClose from '~icons/material-symbols/close-rounded'
+import { isDefaultLocale } from '~/utils/i18n'
+import { removeDoubleSlashes } from '~/utils/url'
 
 
 export const getStaticPaths = (async ({ paginate }) => {

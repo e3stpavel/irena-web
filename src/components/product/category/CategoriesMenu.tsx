@@ -1,5 +1,5 @@
-import { Dialog } from '@ark-ui/solid'
 import type { FlowComponent, JSX } from 'solid-js'
+import { Dialog } from '@ark-ui/solid'
 
 interface Props {
   open?: JSX.Element

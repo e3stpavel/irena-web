@@ -1,8 +1,8 @@
 import type { Page } from 'astro'
 import { Pagination as ArkPagination } from '@ark-ui/solid'
 import { type Component, For } from 'solid-js'
-import { Trigger } from './Trigger'
 import { removeDoubleSlashes } from '~/utils/url'
+import { Trigger } from './Trigger'
 
 interface Props extends Omit<Page<any>, 'data'> {
   label: string

@@ -11,13 +11,13 @@
     "lint": "eslint ."
   },
   "dependencies": {
-    "@ark-ui/solid": "^3.12.1",
+    "@ark-ui/solid": "^3.13.0",
     "@astrojs/check": "^0.9.3",
     "@astrojs/solid-js": "^4.4.2",
-    "astro": "^4.15.8",
+    "astro": "^4.15.9",
     "astro-seo": "^0.8.4",
     "sharp": "^0.33.5",
-    "solid-js": "^1.8.22",
+    "solid-js": "^1.9.1",
     "typescript": "^5.6.2"
   },
   "devDependencies": {
@@ -28,7 +28,7 @@
     "@unocss/eslint-plugin": "^0.62.4",
     "@unocss/reset": "^0.62.4",
     "astro-nanointl": "^1.0.0",
-    "eslint": "^9.11.0",
+    "eslint": "^9.11.1",
     "eslint-plugin-astro": "^1.2.4",
     "eslint-plugin-format": "^0.1.2",
     "unocss": "^0.62.4",
