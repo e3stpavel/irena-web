@@ -15,7 +15,9 @@ export const GET: APIRoute = async () => {
   )
 
   return new Response(
-    JSON.stringify(resolved),
+    JSON.stringify(
+      resolved.map(({ src, attributes }) => ({ src, attributes })),
+    ),
     {
       headers: {
         'Content-Type': 'application/json',

@@ -4,6 +4,8 @@ import IconLoading from '~icons/material-symbols/progress-activity'
 import { createMemo, createResource, For, Show } from 'solid-js'
 import { WindowVirtualizer } from 'virtua/solid'
 
+type ProductImage = Pick<GetImageResult, 'src' | 'attributes'>
+
 async function fetcher() {
   const host = import.meta.env.DEV ? 'http://localhost:4321' : import.meta.env.SITE
   const response = await fetch(`${host}/api/works/`)
@@ -12,7 +14,7 @@ async function fetcher() {
     throw new Error('Failed to fetch products')
   }
 
-  return await response.json() as GetImageResult[]
+  return await response.json() as ProductImage[]
 }
 
 export const ProductsList = () => {
@@ -38,7 +40,7 @@ export const ProductsList = () => {
   const [products] = createResource(fetcher)
 
   const images = createMemo(() => {
-    return (products() ?? []).reduce<Array<GetImageResult[]>>((acc, product, i) => {
+    return (products() ?? []).reduce<Array<ProductImage[]>>((acc, product, i) => {
       const index = i % colCount()
 
       if (!acc[index]) {
