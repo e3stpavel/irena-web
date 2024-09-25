@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
 import Container from '~/components/common/Container.html'
 import Head from '~/components/common/Head.astro'
+import { OrderSection } from '~/components/marketing'
 import { LocaleSwitcher } from '~/components/navigation'
 import { ProductsList } from '~/components/product/ProductsList'
 import HomeLayout from '~/layouts/HomeLayout.astro'
@@ -67,4 +68,5 @@ const altPages = (
       </div>
     </div>
   </Container>
+  <OrderSection />
 </HomeLayout>
