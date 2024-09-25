@@ -14,10 +14,10 @@ interface Props {
 
 export const NavItemDropdown: FlowComponent<Props> = props => (
   <Popover.Root>
-    <Popover.Trigger class="flex items-center gap-1">
+    <Popover.Trigger class="flex items-center gap-2 focus-visible:(outline-none ring)">
       { props.children }
       <Popover.Indicator>
-        <IconArrow class="text-sm text-zinc-600 hover:text-zinc-800" aria-hidden="true" />
+        <IconArrow class="text-sm text-zinc-600 -mx-1 hover:text-zinc-800" aria-hidden="true" />
       </Popover.Indicator>
     </Popover.Trigger>
     <Popover.Positioner>
