@@ -6,7 +6,7 @@ import { getEntry } from 'astro:content'
 
 import { useTranslations } from 'astro-nanointl'
 
-import { args } from 'astro-nanointl/transformers'
+import { args, count } from 'astro-nanointl/transformers'
 import Container from '~/components/common/Container.html'
 import { getLinkToPage } from '~/data/get-link-to-page'
 
@@ -25,6 +25,13 @@ const t = useTranslations({
 
   orderTitle: 'Place an order',
   orderDescription: 'Discuss all the nuances of your order, from weight to decorations and toppings',
+
+  note: 'Note!',
+  noteMessage: args('Please place your order at least %1 before the desired date of receipt of the products.'),
+  days: count({
+    one: '{count} day',
+    many: '{count} days',
+  }),
 }, {
   locale,
   data: translations?.data,
@@ -85,6 +92,14 @@ const contactsLink = await getLinkToPage(locale, 'contacts')
             </dd>
           </div>
         </dl>
+        <div class="mt-16 lg:mt-24 sm:mt-20">
+          <div class="border border-amber-400/40 rounded-xl bg-amber-200 px-5 py-4 shadow-sm">
+            <p class="max-w-none text-amber-900 leading-7 lg:text-center">
+              <strong class="font-semibold">{ t.note }</strong>
+              { t.noteMessage(t.days(3)) }
+            </p>
+          </div>
+        </div>
       </div>
     </div>
   </Container>
