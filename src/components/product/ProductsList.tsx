@@ -8,7 +8,7 @@ type ProductImage = Pick<GetImageResult, 'src' | 'attributes'>
 
 async function fetcher() {
   const host = import.meta.env.DEV ? 'http://localhost:4321' : import.meta.env.SITE
-  const response = await fetch(`${host}/api/works.json/`)
+  const response = await fetch(`${host}/api/works.json`)
 
   if (!response.ok) {
     throw new Error('Failed to fetch products')
