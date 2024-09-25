@@ -72,11 +72,7 @@ const altPages = (
 </HomeLayout>
 
 <script>
-import { DEFAULT_EMAIL } from '~/utils/email'
+import { insertEmail } from '~/utils/email'
 
-const span = document.getElementById('email-placeholder')
-
-if (span !== null) {
-  span.innerHTML = DEFAULT_EMAIL
-}
+insertEmail('#email-placeholder', 'default')
 </script>
