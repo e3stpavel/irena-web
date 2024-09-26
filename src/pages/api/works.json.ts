@@ -17,7 +17,10 @@ export const GET: APIRoute = async () => {
   // resolve only unused images
   const resolved = await Promise.all(
     Object.values(worksImages).map(
-      async ({ default: src }) => await getImage({ src }),
+      async ({ default: src }) => await getImage({
+        src,
+        width: 360,
+      }),
     ),
   )
 
@@ -33,7 +36,10 @@ export const GET: APIRoute = async () => {
             decoding: 'async',
           },
         })),
-      ...resolved.map(({ src, attributes }) => ({ src, attributes })),
+      ...resolved.map(({ src, attributes }) => ({
+        src,
+        attributes,
+      })),
     ]),
   )
 }

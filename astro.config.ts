@@ -8,8 +8,6 @@ import { locales } from './i18n.config'
 export default defineConfig({
   site: 'https://irena.ee',
 
-  trailingSlash: 'always',
-
   integrations: [
     unocss({
       injectReset: true,
