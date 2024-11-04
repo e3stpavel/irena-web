@@ -1,7 +1,7 @@
 ---
-import { Image } from 'astro:assets'
 import { type CollectionEntry, getCollection } from 'astro:content'
 import { getRelativeLocaleUrl } from 'astro:i18n'
+import ProductImage from '~/components/ProductImage.astro'
 
 interface Props {
   productDetails: CollectionEntry<'product-details'>
@@ -23,7 +23,11 @@ if (product === undefined) {
 ---
 
 <div class="group relative aspect-square overflow-hidden rounded-xl bg-zinc-100 hover:opacity-75 focus-within:(ring ring-offset-3 ring-indigo-600)">
-  <Image src={productDetails.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" loading="eager" />
+  <ProductImage
+    src={productDetails.data.thumbnail}
+    alt={product.data.name}
+    eager
+  />
   <a href={getRelativeLocaleUrl(locale, product.id.slice(2))} hreflang={locale}>
     <span class="sr-only">Go to { product.data.name } page</span>
     <span class="absolute inset-0" />

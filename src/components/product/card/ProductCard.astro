@@ -1,9 +1,9 @@
 ---
 import type { CollectionEntry } from 'astro:content'
-import { Image } from 'astro:assets'
 import { getEntry } from 'astro:content'
 import { getRelativeLocaleUrl } from 'astro:i18n'
 import { format, useTranslations } from 'astro-nanointl'
+import ProductImage from '~/components/ProductImage.astro'
 
 interface Props {
   product: CollectionEntry<'products'>
@@ -27,7 +27,10 @@ const t = useTranslations({
 
 <div class="group relative snap-center">
   <div class="aspect-square overflow-hidden rounded-lg bg-zinc-200 group-hover:opacity-75">
-    <Image src={details.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" />
+    <ProductImage
+      src={details.data.thumbnail}
+      alt={product.data.name}
+    />
   </div>
   <div class="mt-4">
     <h3 class="truncate px-1 text-zinc-900 -mx-1">
