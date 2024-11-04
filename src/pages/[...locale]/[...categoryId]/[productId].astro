@@ -1,6 +1,6 @@
 ---
 import type { GetStaticPaths } from 'astro'
-import { getImage, Image } from 'astro:assets'
+import { getImage } from 'astro:assets'
 import { getCollection, getEntry } from 'astro:content'
 import { format, useTranslations } from 'astro-nanointl'
 import { params } from 'astro-nanointl/transformers'
@@ -9,6 +9,7 @@ import Container from '~/components/common/Container.html'
 import Head from '~/components/common/Head.astro'
 import { OrderSection } from '~/components/marketing'
 import { Breadcrumbs, LocaleSwitcher } from '~/components/navigation'
+import ProductImage from '~/components/ProductImage.astro'
 import HomeLayout from '~/layouts/HomeLayout.astro'
 import { isDefaultLocale } from '~/utils/i18n'
 
@@ -106,7 +107,11 @@ const ogImage = await getImage({ src: category.data.ogImage, format: 'webp' })
         <div class="mt-4 flex flex-col items-start gap-12 lg:flex-row">
           <div class="w-full lg:w-xl">
             <div class="aspect-square overflow-hidden rounded-xl bg-zinc-200">
-              <Image src={details.data.thumbnail} alt={product.data.name} class="size-full object-cover object-center" loading="eager" />
+              <ProductImage
+                src={details.data.thumbnail}
+                alt={product.data.name}
+                eager
+              />
             </div>
           </div>
           <div class="w-full flex-1">

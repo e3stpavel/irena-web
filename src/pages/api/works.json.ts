@@ -14,32 +14,26 @@ export const GET: APIRoute = async () => {
     { eager: true },
   )
 
-  // resolve only unused images
+  // TODO: deduplication is not working
   const resolved = await Promise.all(
-    Object.values(worksImages).map(
+    [...Object.values(productsImages), ...Object.values(worksImages)].map(
       async ({ default: src }) => await getImage({
         src,
-        width: 360,
+        widths: [240, 540, 720, 1600],
+        sizes: '(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1600px',
       }),
     ),
   )
 
   return new Response(
-    JSON.stringify([
-      ...Object.values(productsImages)
-        .map(({ default: { src, width, height } }) => ({
-          src,
-          attributes: {
-            width,
-            height,
-            loading: 'lazy',
-            decoding: 'async',
-          },
-        })),
-      ...resolved.map(({ src, attributes }) => ({
+    JSON.stringify(
+      resolved.map(({ src, attributes, srcSet }) => ({
         src,
-        attributes,
+        attributes: {
+          srcset: srcSet.attribute,
+          ...attributes,
+        },
       })),
-    ]),
+    ),
   )
 }

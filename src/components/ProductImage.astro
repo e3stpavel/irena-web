@@ -1,0 +1,22 @@
+---
+import type { ImageMetadata } from 'astro'
+import { Image } from 'astro:assets'
+
+interface Props {
+  src: ImageMetadata
+  alt: string
+  eager?: true
+}
+
+const { src, alt, eager } = Astro.props
+
+---
+
+<Image
+  src={src}
+  alt={alt}
+  widths={[240, 540, 720, 1600]}
+  sizes="(max-width: 360px) 240px, (max-width: 720px) 540px, (max-width: 1600px) 720px, 1600px"
+  class="size-full object-cover object-center"
+  loading={eager ? 'eager' : 'lazy'}
+/>
