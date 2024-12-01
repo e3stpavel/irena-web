@@ -1,7 +1,7 @@
 import { Popover } from '@ark-ui/solid'
-import IconArrow from '~icons/material-symbols/keyboard-arrow-down-rounded'
-
 import { type FlowComponent, For } from 'solid-js'
+
+import IconArrow from '~icons/material-symbols/keyboard-arrow-down-rounded'
 
 interface NavItem {
   label: string

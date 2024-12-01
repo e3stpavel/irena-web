@@ -1,8 +1,8 @@
 import type { GetImageResult } from 'astro'
 import { createBreakpoints } from '@solid-primitives/media'
-import IconLoading from '~icons/material-symbols/progress-activity'
 import { createMemo, createResource, For, Show } from 'solid-js'
 import { WindowVirtualizer } from 'virtua/solid'
+import IconLoading from '~icons/material-symbols/progress-activity'
 
 type ProductImage = Pick<GetImageResult, 'src' | 'attributes'>
 

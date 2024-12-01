@@ -1,5 +1,5 @@
-import { getEntry } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
+import { getEntry } from 'astro:content'
 
 export async function getNavigationTranslations(locale: string) {
   const translations = await getEntry('translations', `${locale}/components/navigation/pages`)
