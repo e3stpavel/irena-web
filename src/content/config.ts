@@ -1,5 +1,5 @@
-import { defineCollection, reference, z } from 'astro:content'
 import { translationsSchema } from 'astro-nanointl'
+import { defineCollection, reference, z } from 'astro:content'
 
 const categories = defineCollection({
   type: 'data',

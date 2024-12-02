@@ -1,9 +1,9 @@
 ---
 import type { ImageMetadata } from 'astro'
-import { getImage } from 'astro:assets'
-import { getEntry } from 'astro:content'
 import { useTranslations } from 'astro-nanointl'
 import { SEO, type SEOProps } from 'astro-seo'
+import { getImage } from 'astro:assets'
+import { getEntry } from 'astro:content'
 import { getAltLinks } from '~/data/get-alt-links'
 
 export interface Props extends Omit<SEOProps, 'languageAlternates'> {
